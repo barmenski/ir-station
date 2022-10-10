@@ -1,0 +1,2 @@
+export getTopTemp;
+export getBottomTemp;
