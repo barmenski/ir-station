@@ -9,10 +9,9 @@ http.createServer((request, response) => {
   response.on('error', (err) => {
     console.error(err);
   });
-  if (request.method === 'POST' && request.url === '/echo') {
-    request.pipe(response);
-  } else {
-    response.statusCode = 404;
-    response.end();
-  }
+  if (request.url==='/'){
+  	fs.readFile('./public/index.html', 'UTF-8', (err, html)=>{
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	response.end(html);
+	});
 }).listen(8080);
