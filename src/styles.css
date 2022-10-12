@@ -1,9 +1,9 @@
 * {
-  box-size: border-box; 
+  box-sizing: border-box;
 }
 
 .wrapper {
-  width:100%;
+  width: 100%;
   margin: 0, auto;
 }
 
@@ -32,7 +32,7 @@
   max-width: 350px;
   height: 5px;
   border: 2px solid green;
-margin: 10px;  
+  margin: 10px;
 }
 
 .bottom-heater {
@@ -41,5 +41,3 @@ margin: 10px;
   border: 2px solid #bfbfbf;
   margin: 10px;
 }
-
-

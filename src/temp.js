@@ -1,3 +1,3 @@
 //export getTopTemp;
 //export getBottomTemp;
-console.log("temp.js added");
+console.log('temp.js added');
