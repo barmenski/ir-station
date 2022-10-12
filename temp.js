@@ -1,2 +1,3 @@
-export getTopTemp;
-export getBottomTemp;
+//export getTopTemp;
+//export getBottomTemp;
+console.log("temp.js added");
