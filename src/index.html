@@ -8,27 +8,32 @@
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
   </head>
   <body>
-    <h2>IR station</h2>
-    <header class="header"></header>
+    <header class="header">
+      <h2 class="heading">IR station</h2>
+    </header>
     <div class="wrapper">
-      <div class="wrapper-station">
-        <div class="top-heater">
-          <p class="top-heater-text">
-            <span class="top-heater-power">-</span> W
-          </p>
+      <main class="main grid">
+        <div class="wrapper-station">
+          <div class="top-heater">
+            <p class="top-heater-text">
+              <span class="top-heater-power">-</span> W
+            </p>
+          </div>
+          <div class="chip">
+            <p class="chip-text"><span class="chip-temp">-</span>C</p>
+          </div>
+          <div class="board">
+            <p class="board-text"><span class="board-temp">-</span>C</p>
+          </div>
+          <div class="bottom-heater">
+            <p class="bottom-heater-text">
+              <span class="bottom-heater-power">-</span>W
+            </p>
+          </div>
         </div>
-        <div class="chip">
-          <p class="chip-text"><span class="chip-temp">-</span>C</p>
-        </div>
-        <div class="board">
-          <p class="board-text"><span class="board-temp">-</span>C</p>
-        </div>
-        <div class="bottom-heater">
-          <p class="bottom-heater-text">
-            <span class="bottom-heater-power">-</span>W
-          </p>
-        </div>
-      </div>
+        <div class="wrapper-control"></div>
+        <div class="wrapper-graph"></div>
+      </main>
     </div>
     <script src="./station.js"></script>
     <script src="./temp.js"></script>

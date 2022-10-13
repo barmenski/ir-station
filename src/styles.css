@@ -1,43 +1,152 @@
+@font-face {
+  font-family: SceneW01-Black;
+  src: url('./assets/fonts/SceneW01-Black.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('./assets/fonts/roboto-v20-latin-regular.woff2') format('woff2'),
+    url('./assets/fonts/roboto-v20-latin-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''),
+    url('./assets/fonts/roboto-v20-latin-500.woff2') format('woff2'),
+    url('./assets/fonts/roboto-v20-latin-500.woff') format('woff');
+}
+
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.wrapper {
+html {
+  font-size: 20px;
+}
+
+body {
+  color: rgb(37, 37, 37);
+  background-color: white;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header {
+  min-height: 64px;
   width: 100%;
-  margin: 0, auto;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b2bec9;
+  box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.5);
+}
+
+.heading {
+  margin: 5px;
+  color: white;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 0.7fr 0.3fr;
+  /*grid-template-rows: 1fr;*/
+  grid-template-areas:
+    'station control'
+    'graph graph';
+  /*grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));*/
 }
 
 .wrapper-station {
+  height: 550px;
+  grid-area: station;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.wrapper-control {
+  height: 550px;
+  grid-area: control;
+  background-color: antiquewhite;
+}
+
+.wrapper-graph {
+  height: 250px;
+  grid-area: graph;
+  background-color: aquamarine;
+}
+
 .top-heater {
-  max-width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid #bfbfbf;
   margin: 10px;
 }
 
 .chip {
-  max-width: 20px;
+  width: 20px;
   height: 5px;
   border: 2px solid black;
-  margin: 10px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+  position: relative;
 }
 
 .board {
-  max-width: 350px;
+  width: 350px;
   height: 5px;
   border: 2px solid green;
   margin: 10px;
+  position: relative;
 }
 
 .bottom-heater {
-  max-width: 400px;
+  width: 400px;
   height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid #bfbfbf;
   margin: 10px;
+}
+
+.chip-text {
+  min-width: 100px;
+  position: absolute;
+  /*transform: translate(-50%, -50%);*/
+  right: 0%;
 }
