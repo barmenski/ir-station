@@ -61,7 +61,7 @@ a {
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
-  line-height: 16px;
+  line-height: 24px;
   text-align: center;
   letter-spacing: 1.25px;
   text-transform: uppercase;
@@ -104,7 +104,7 @@ a {
 .wrapper-graph {
   height: 250px;
   grid-area: graph;
-  background-color: aquamarine;
+  background-color: #b2bec9;
 }
 
 .top-heater {
@@ -130,7 +130,7 @@ a {
   width: 350px;
   height: 5px;
   border: 2px solid green;
-  margin: 10px;
+  margin: 5px;
   position: relative;
 }
 
@@ -144,9 +144,46 @@ a {
   margin: 10px;
 }
 
-.chip-text {
+.chip-text,
+.board-text {
   min-width: 100px;
   position: absolute;
-  /*transform: translate(-50%, -50%);*/
+  transform: translate(150%, -50%);
   right: 0%;
+}
+
+.top-heater-text,
+.bottom-heater-text {
+  min-width: 100px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.heading-control,
+.heading-graph {
+  margin: 10px;
+  color: rgb(0, 0, 0);
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.temp-graph,
+.power-top-header,
+.power-bottom-header {
+  width: 220px;
+  height: 200px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.wrapper-canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

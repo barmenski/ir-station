@@ -31,8 +31,64 @@
             </p>
           </div>
         </div>
-        <div class="wrapper-control"></div>
-        <div class="wrapper-graph"></div>
+        <div class="wrapper-control">
+          <h3 class="heading-control">Control</h3>
+          <form
+            action="#"
+            class="form-control"
+            name="form-control"
+            method="post"
+          ><div class="random-infl">
+            <input type="checkbox" name="cold-wind" /><label>Cold wind</label>
+            <input type="checkbox" name="voltage-spikes" /><label
+              >Voltage spikes</label
+            >
+          </div>
+          <div class="manual-infl">
+            <button class="manual-infl-add-top_btn" type="submit">
+              +1 &#176C TOP-HEATER
+            </button>
+            <button class="manual-infl-get-top_btn" type="submit">
+              -1 &#176C TOP-HEATER
+            </button>
+            <button class="manual-infl-add-botton_btn" type="submit">
+              +1 &#176C BOTTOM-HEATER
+            </button>
+            <button class="manual-infl-get-bottom_btn" type="submit">
+              -1 &#176C BOTTOM-HEATER
+            </button>
+          </div>
+            <input
+              type="number"
+              class="width-board"
+              placeholder="Width of board"
+              max="290"
+            />
+            <input
+              type="number"
+              class="height-board"
+              placeholder="Height of board"
+              max="210"
+            />
+            <button class="form-control-submit_btn invalid" type="submit">
+              Submit
+            </button>
+            <button class="form-control-cancel_btn" type="submit">
+              Cancel
+            </button>
+            <button class="form-control-start_btn invalid" type="submit">
+              Start
+            </button>
+          </form>
+        </div>
+        <div class="wrapper-graph">
+          <h3 class="heading-graph">Graph</h3>
+          <div class="wrapper-canvas">
+            <div class="temp-graph"></div>
+            <div class="power-top-header"></div>
+            <div class="power-bottom-header"></div>
+          </div>
+        </div>
       </main>
     </div>
     <script src="./station.js"></script>
