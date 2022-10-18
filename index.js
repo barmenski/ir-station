@@ -20,19 +20,21 @@ http
         response.end(html);
       });
     } else if (request.url.match('.css$')) {
-      console.log(request.url);
       var cssPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(cssPath, 'UTF-8');
       response.writeHead(200, { 'Content-Type': 'text/css' });
       fileStream.pipe(response);
+    } else if (request.url.match('.woff2$')) {
+      var fontPath = path.join(__dirname, 'src', request.url);
+      var fileStream = fs.createReadStream(fontPath);
+      response.writeHead(200, { 'Content-Type': 'font/woff2' });
+      fileStream.pipe(response);
     } else if (request.url.match('.ico$')) {
-      console.log(request.url);
       var favPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(favPath);
       response.writeHead(200, { 'Content-Type': 'image/x-icon' });
       fileStream.pipe(response);
     } else if (request.url.match('.js$')) {
-      console.log(request.url);
       var jsPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(jsPath, 'UTF-8');
       response.writeHead(200, { 'Content-Type': 'text/javascript' });

@@ -1,4 +1,4 @@
-import { Temperature } from './temp';
+import { Temperature } from './temp.js';
 
 class Station {
   constructor() {
@@ -40,7 +40,15 @@ class Station {
   }
 
   heat() {
-    this.currTime++;
+    console.log(
+      'time: ' +
+        this.currTime +
+        'tempChip: ' +
+        this.tempChip +
+        'powerTop: ' +
+        this.powerTop
+    );
+
     if (this.isPbFree) {
       var preHeatTime = this.profilePbFree[0][0];
       var preHeatTemp = this.profilePbFree[0][1];
@@ -57,6 +65,7 @@ class Station {
       var reflowTemp = this.profilePb[2][1];
     }
     while (this.currTime < preHeatTime) {
+      this.currTime++;
       let riseTemp = (preHeatTemp - 0) / (preHeatTime - 0);
       let prevTemp = this.tempChip;
 
@@ -76,6 +85,7 @@ class Station {
     }
 
     while (this.currTime > preHeatTime && this.currTime < waitTime) {
+      this.currTime++;
       let riseTemp = (waitTemp - preHeatTemp) / (waitTime - preHeatTime);
       let prevTemp = this.tempChip;
 
@@ -91,6 +101,42 @@ class Station {
       } else if (delta > riseTemp && delta != 0) {
         this.powerBottom =
           this.powerBottom - this.stepPower * (delta / riseTemp);
+      }
+    }
+
+    while (this.currTime > waitTime && this.currTime < reflowTime) {
+      this.currTime++;
+      let riseTemp = (reflowTemp - waitTemp) / (reflowTime - waitTime);
+      let prevTemp = this.tempChip;
+
+      this.tempChip = this.temperature.getTempChip(
+        this.powerTop,
+        this.powerBottom
+      );
+      let delta = this.tempChip - prevTemp;
+
+      if (delta < riseTemp && delta != 0) {
+        this.powerBottom =
+          this.powerBottom + this.stepPower * (delta / riseTemp);
+      } else if (delta > riseTemp && delta != 0) {
+        this.powerBottom =
+          this.powerBottom - this.stepPower * (delta / riseTemp);
+      }
+    }
+
+    while (this.currTime > reflowTime && this.currTime < 330) {
+      this.currTime++;
+      let riseTemp = -1;
+      let prevTemp = this.tempChip;
+
+      this.tempChip = this.temperature.getTempChip(
+        this.powerTop,
+        this.powerBottom
+      );
+      let delta = this.tempChip - prevTemp;
+
+      if (delta > riseTemp && delta != 0) {
+        this.powerBottom = this.powerBottom - this.stepPower * delta * 0.1;
       }
     }
   }
