@@ -45,7 +45,7 @@ http
     }
   })
   .listen(8080, () => {
-    console.log('Server started on :8080');
+    console.log('Webserver started on :8080');
   });
 
 process.on('SIGINT', function () {

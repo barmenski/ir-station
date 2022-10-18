@@ -1,6 +1,6 @@
 import { Temperature } from './temp.js';
 
-class Station {
+export class Station {
   constructor() {
     this.temperature = new Temperature();
     this.isPbFree = true;
@@ -30,7 +30,7 @@ class Station {
   }
 
   start() {
-    this.timerId = setInterval(1000, heat);
+    this.timerId = setInterval(1000, this.heat);
   }
 
   stop() {
