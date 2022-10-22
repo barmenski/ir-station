@@ -30,7 +30,7 @@ export class Station {
   }
 
   start() {
-    this.timerId = setInterval(1000, this.heat);
+    this.timerId = setInterval(this.heat, 1000);
   }
 
   stop() {
@@ -39,14 +39,14 @@ export class Station {
     }
   }
 
-  heat() {
+  heat = () => {
     console.log(
       'time: ' +
         this.currTime +
-        'tempChip: ' +
+        ' tempChip: ' +
         this.tempChip +
-        'powerTop: ' +
-        this.powerTop
+        ' powerBottom: ' +
+        this.powerBottom
     );
 
     if (this.isPbFree) {
@@ -64,27 +64,30 @@ export class Station {
       var reflowTime = this.profilePb[2][0];
       var reflowTemp = this.profilePb[2][1];
     }
-    while (this.currTime < preHeatTime) {
+    if (this.currTime < preHeatTime) {
       this.currTime++;
       let riseTemp = (preHeatTemp - 0) / (preHeatTime - 0);
+
       let prevTemp = this.tempChip;
 
       this.tempChip = this.temperature.getTempChip(
         this.powerTop,
         this.powerBottom
       );
-      let delta = this.tempChip - prevTemp;
-
+      let delta = Number((this.tempChip - prevTemp).toFixed(1));
+      console.log('riseTemp: ' + riseTemp, ' delta: ' + delta);
       if (delta < riseTemp && delta != 0) {
         this.powerBottom =
           this.powerBottom + this.stepPower * (delta / riseTemp);
       } else if (delta > riseTemp && delta != 0) {
         this.powerBottom =
           this.powerBottom - this.stepPower * (delta / riseTemp);
+      } else {
+        this.powerBottom = this.powerBottom + this.stepPower;
       }
     }
 
-    while (this.currTime > preHeatTime && this.currTime < waitTime) {
+    if (this.currTime > preHeatTime && this.currTime < waitTime) {
       this.currTime++;
       let riseTemp = (waitTemp - preHeatTemp) / (waitTime - preHeatTime);
       let prevTemp = this.tempChip;
@@ -104,7 +107,7 @@ export class Station {
       }
     }
 
-    while (this.currTime > waitTime && this.currTime < reflowTime) {
+    if (this.currTime > waitTime && this.currTime < reflowTime) {
       this.currTime++;
       let riseTemp = (reflowTemp - waitTemp) / (reflowTime - waitTime);
       let prevTemp = this.tempChip;
@@ -124,7 +127,7 @@ export class Station {
       }
     }
 
-    while (this.currTime > reflowTime && this.currTime < 330) {
+    if (this.currTime > reflowTime && this.currTime < 330) {
       this.currTime++;
       let riseTemp = -1;
       let prevTemp = this.tempChip;
@@ -139,5 +142,5 @@ export class Station {
         this.powerBottom = this.powerBottom - this.stepPower * delta * 0.1;
       }
     }
-  }
+  };
 }
