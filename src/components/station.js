@@ -29,9 +29,9 @@ export class Station {
     this.stepPower = 50;
   }
 
-  start() {
+  start = () => {
     this.timerId = setInterval(this.heat, 1000);
-  }
+  };
 
   stop() {
     if (this.timerId) {
