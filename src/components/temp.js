@@ -9,12 +9,13 @@ export class Temperature {
   }
 
   getTempBoard = (powerTop, powerBottom) => {
-    let deltaTemp = this.tempEnv - this.tempBoard;
+    let deltaTemp = Math.abs(Number((this.tempChip - this.tempEnv).toFixed(1)));
+
     this.tempBoard = Number(
       (
-        this.tempBoard +
-        (powerTop + powerBottom) / oneCelSecTempRise -
-        deltaTemp / 100
+        this.tempBoard -
+        deltaTemp * 0.1 +
+        (powerTop + powerBottom) / oneCelSecTempRise
       ).toFixed(1)
     );
 
@@ -22,28 +23,7 @@ export class Temperature {
   };
 
   getTempChip = (powerTop, powerBottom) => {
-    let deltaTemp = this.tempEnv - this.tempChip;
-    if (powerTop === 0 && powerBottom != 0) {
-      this.tempChip = this.getTempBoard(powerTop, powerBottom);
-      console.log(
-        'this.tempChip: ' + this.tempChip,
-        'this.tempBoard: ' + this.tempBoard
-      );
-      if (this.tempBoard < this.tempEnv + 20) {
-        this.tempChip = this.tempEnv;
-      } else {
-        this.tempChip = this.tempBoard - 20;
-      }
-    } else if (powerTop != 0 && powerBottom != 0) {
-      this.tempChip = Number(
-        (
-          this.tempChip +
-          (powerTop + powerBottom) / oneCelSecTempRise -
-          deltaTemp / 100
-        ).toFixed(1)
-      );
-    }
-
+    this.tempChip = this.tempBoard;
     return this.tempChip;
   };
 }

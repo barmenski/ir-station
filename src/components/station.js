@@ -33,11 +33,11 @@ export class Station {
     this.timerId = setInterval(this.heat, 1000);
   };
 
-  stop() {
+  stop = () => {
     if (this.timerId) {
       clearInterval(this.timerId);
     }
-  }
+  };
 
   heat = () => {
     console.log(
@@ -66,27 +66,38 @@ export class Station {
     }
     if (this.currTime < preHeatTime) {
       this.currTime++;
-      let riseTemp = (preHeatTemp - 0) / (preHeatTime - 0);
+      let rise = (preHeatTemp - 0) / (preHeatTime - 0);
 
       let prevTemp = this.tempChip;
 
+      this.tempBoard = this.temperature.getTempBoard(
+        this.powerTop,
+        this.powerBottom
+      );
       this.tempChip = this.temperature.getTempChip(
         this.powerTop,
         this.powerBottom
       );
-      let delta = Number((this.tempChip - prevTemp).toFixed(1));
-      console.log('riseTemp: ' + riseTemp, ' delta: ' + delta);
-      if (delta < riseTemp && delta != 0) {
-        this.powerBottom =
-          this.powerBottom + this.stepPower * (delta / riseTemp);
-      } else if (delta > riseTemp && delta != 0) {
-        this.powerBottom =
-          this.powerBottom - this.stepPower * (delta / riseTemp);
+
+      let delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
+      //let currRise = Number((delta/(preHeatTime-this.currTime)).toFixed(1));
+
+      console.log('rise: ' + rise, ' delta: ' + delta);
+      if (delta != 0) {
+        let powerBottom = Number(
+          (this.powerBottom * (rise / delta)).toFixed(1)
+        );
+        if (powerBottom <= 3420) {
+          this.powerBottom = powerBottom;
+        } else this.powerBottom = 3420;
       } else {
         this.powerBottom = this.powerBottom + this.stepPower;
       }
+    } else {
+      alert('Stop heating.');
+      this.stop();
     }
-
+    /*
     if (this.currTime > preHeatTime && this.currTime < waitTime) {
       this.currTime++;
       let riseTemp = (waitTemp - preHeatTemp) / (waitTime - preHeatTime);
@@ -142,5 +153,6 @@ export class Station {
         this.powerBottom = this.powerBottom - this.stepPower * delta * 0.1;
       }
     }
+    */
   };
 }
