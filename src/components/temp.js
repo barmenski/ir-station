@@ -14,7 +14,7 @@ export class Temperature {
     this.tempBoard = Number(
       (
         this.tempBoard -
-        deltaTemp * 0.1 +
+        deltaTemp * 0.05 +
         (powerTop + powerBottom) / oneCelSecTempRise
       ).toFixed(1)
     );

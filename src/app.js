@@ -1,4 +1,5 @@
 import { Station } from './components/station.js';
+import { Graph } from './components/graph.js';
 
 window.onload = () => {
   const START_BTN = document.querySelector('.form-control-start_btn');
@@ -9,6 +10,7 @@ window.onload = () => {
   const CHIP_TEMP = document.querySelector('.chip-temp');
   const BOARD_TEMP = document.querySelector('.board-temp');
   window.station = new Station();
+  window.graph = new Graph();
 
   START_BTN.addEventListener('click', (event) => {
     event.preventDefault();
@@ -24,5 +26,6 @@ window.onload = () => {
     BOTTOM_POWER.innerHTML = `${window.station.powerBottom}`;
     CHIP_TEMP.innerHTML = `${window.station.tempChip}`;
     BOARD_TEMP.innerHTML = `${window.station.tempBoard}`;
+    window.graph.drawGraph();
   });
 };
