@@ -27,6 +27,7 @@ export class Station {
     this.timerId = null;
     this.currTime = 0;
     this.stepPower = 50;
+    this.delta = 0;
   }
 
   start = () => {
@@ -79,13 +80,13 @@ export class Station {
         this.powerBottom
       );
 
-      let delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
-      //let currRise = Number((delta/(preHeatTime-this.currTime)).toFixed(1));
+      this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
+      //let currrise = Number((this.delta/(preHeatTime-this.currTime)).toFixed(1));
 
-      console.log('rise: ' + rise, ' delta: ' + delta);
-      if (delta != 0) {
+      console.log('rise: ' + rise, ' this.delta: ' + this.delta);
+      if (this.delta != 0) {
         let powerBottom = Number(
-          (this.powerBottom * (rise / delta) * 1.1).toFixed(1)
+          (this.powerBottom * (rise / this.delta) * 1.1).toFixed(1)
         );
         if (powerBottom <= 3420) {
           this.powerBottom = powerBottom;
@@ -107,14 +108,14 @@ export class Station {
         this.powerTop,
         this.powerBottom
       );
-      let delta = this.tempChip - prevTemp;
+      let this.delta = this.tempChip - prevTemp;
 
-      if (delta < riseTemp && delta != 0) {
+      if (this.delta < riseTemp && this.delta != 0) {
         this.powerBottom =
-          this.powerBottom + this.stepPower * (delta / riseTemp);
-      } else if (delta > riseTemp && delta != 0) {
+          this.powerBottom + this.stepPower * (this.delta / riseTemp);
+      } else if (this.delta > riseTemp && this.delta != 0) {
         this.powerBottom =
-          this.powerBottom - this.stepPower * (delta / riseTemp);
+          this.powerBottom - this.stepPower * (this.delta / riseTemp);
       }
     }
 
@@ -127,14 +128,14 @@ export class Station {
         this.powerTop,
         this.powerBottom
       );
-      let delta = this.tempChip - prevTemp;
+      let this.delta = this.tempChip - prevTemp;
 
-      if (delta < riseTemp && delta != 0) {
+      if (this.delta < riseTemp && this.delta != 0) {
         this.powerBottom =
-          this.powerBottom + this.stepPower * (delta / riseTemp);
-      } else if (delta > riseTemp && delta != 0) {
+          this.powerBottom + this.stepPower * (this.delta / riseTemp);
+      } else if (this.delta > riseTemp && this.delta != 0) {
         this.powerBottom =
-          this.powerBottom - this.stepPower * (delta / riseTemp);
+          this.powerBottom - this.stepPower * (this.delta / riseTemp);
       }
     }
 
@@ -147,10 +148,10 @@ export class Station {
         this.powerTop,
         this.powerBottom
       );
-      let delta = this.tempChip - prevTemp;
+      let this.delta = this.tempChip - prevTemp;
 
-      if (delta > riseTemp && delta != 0) {
-        this.powerBottom = this.powerBottom - this.stepPower * delta * 0.1;
+      if (this.delta > riseTemp && this.delta != 0) {
+        this.powerBottom = this.powerBottom - this.stepPower * this.delta * 0.1;
       }
     }
     */

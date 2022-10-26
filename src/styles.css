@@ -187,8 +187,8 @@ a {
 }
 
 .temp-graph,
-.power-top-header,
-.power-bottom-header {
+.power-top-graph,
+.power-bottom-graph {
   width: 220px;
   height: 200px;
   border: 1px solid black;
