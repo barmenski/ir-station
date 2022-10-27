@@ -114,6 +114,12 @@ a {
   background-color: antiquewhite;
 }
 
+.random-infl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .wrapper-graph {
   height: 250px;
   grid-area: graph;
