@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 var path = require('path');
-
+const PORT = process.env.PORT || 8080;
 http
   .createServer((request, response) => {
     request.on('error', (err) => {
@@ -44,8 +44,8 @@ http
       response.end('No Page Found');
     }
   })
-  .listen(8080, () => {
-    console.log('Webserver started on :8080');
+  .listen(PORT, () => {
+    console.log(`Webserver started on :${PORT}`);
   });
 
 process.on('SIGINT', function () {
