@@ -39,7 +39,7 @@ export class Graph {
 
   drawGraph = (x = 0, y = 0) => {
     this.ctx.strokeStyle = 'olive';
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = 1;
     this.ctx.lineTo(this.cx + x, this.cy + y);
     this.ctx.stroke();
   };

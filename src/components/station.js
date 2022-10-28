@@ -86,7 +86,7 @@ export class Station {
       console.log('rise: ' + rise, ' this.delta: ' + this.delta);
       if (this.delta != 0) {
         let powerBottom = Number(
-          (this.powerBottom * (rise / this.delta) * 1.1).toFixed(1)
+          (this.powerBottom * (rise / this.delta) * 1.2).toFixed(1)
         );
         if (powerBottom <= 3420) {
           this.powerBottom = powerBottom;

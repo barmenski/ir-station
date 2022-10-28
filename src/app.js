@@ -33,7 +33,7 @@ window.onload = () => {
     BOARD_TEMP.innerHTML = `${window.station.tempBoard}`;
     window.temp_graph.drawGraph(
       window.station.currTime,
-      -1 * window.station.tempChip
+      -0.5 * window.station.tempChip
     );
     window.power_top_graph.drawGraph(
       window.station.currTime,
