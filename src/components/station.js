@@ -6,14 +6,17 @@ export class Station {
     this.isPbFree = true;
     this.powerTop = 0;
     this.powerBottom = 0;
-    this.tempChip = this.temperature.getTempChip(
-      this.powerTop,
-      this.powerBottom
-    );
-    this.tempBoard = this.temperature.getTempBoard(
-      this.powerTop,
-      this.powerBottom
-    );
+    // this.tempChip = this.temperature.getTempChip(
+    //   this.powerTop,
+    //   this.powerBottom
+    // );
+    // this.tempBoard = this.temperature.getTempBoard(
+    //   this.powerTop,
+    //   this.powerBottom
+    // );
+    this.tempChip = 25;
+    this.tempBoard = 25;
+
     this.profilePb = [
       [120, 150],
       [210, 183],
@@ -41,6 +44,7 @@ export class Station {
   };
 
   heat = () => {
+    window.refresh();
     console.log(
       'time: ' +
         this.currTime +

@@ -1,5 +1,5 @@
 let maxPower = 3460; // W
-let maxTempRise = 5; // C/sec
+let maxTempRise = 7; // C/sec
 let oneCelSecTempRise = maxPower / maxTempRise; //692W -  power for 1 C/sec
 export class Temperature {
   constructor(tempEnv = 25, tempChip = 25, tempBoard = 25) {

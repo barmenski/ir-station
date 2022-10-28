@@ -20,10 +20,10 @@
             </p>
           </div>
           <div class="chip">
-            <p class="chip-text"><span class="chip-temp">-</span>C</p>
+            <p class="chip-text"><span class="chip-temp">-</span>&#176C</p>
           </div>
           <div class="board">
-            <p class="board-text"><span class="board-temp">-</span>C</p>
+            <p class="board-text"><span class="board-temp">-</span>&#176C</p>
           </div>
           <div class="bottom-heater">
             <p class="bottom-heater-text">
@@ -38,25 +38,16 @@
             class="form-control"
             name="form-control"
             method="post"
-          ><div class="random-infl">
-            <input type="checkbox" name="cold-wind" /><label>Cold wind</label>
-            <input type="checkbox" name="voltage-spikes" /><label
-              >Voltage spikes</label
-            >
+          ><div class="mode">
+            <input type="radio" name="pb+" /><label>Pb+</label>
+            <input type="radio" name="pb-" /><label>Pb-</label>
+            <label>Constant temperature
+            <input type="radio" name="const-temp" />
+            <output name="result">0</output>
+          </label>
           </div>
-          <div class="manual-infl">
-            <button class="manual-infl-add-top_btn btn" disabled type="submit">
-              +1 &#176C </br>TOP-HEATER
-            </button>
-            <button class="manual-infl-get-top_btn btn" disabled type="submit">
-              -1 &#176C </br>TOP-HEATER
-            </button>
-            <button class="manual-infl-add-botton_btn btn" disabled type="submit">
-              +1 &#176C </br>BOTTOM-HEATER
-            </button>
-            <button class="manual-infl-get-bottom_btn btn "disabled type="submit">
-              -1 &#176C </br>BOTTOM-HEATER
-            </button>
+          <div class="manual-set">
+            <input name="manual-set-temp" data-sizing="px" type="range" min="0" max="300" value="0">
           </div>
             <input
               type="number"

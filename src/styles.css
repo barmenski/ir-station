@@ -15,6 +15,34 @@
     url('./assets/fonts/roboto-v20-latin-500.woff') format('woff');
 }
 
+@font-face {
+  font-family: 'led7';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''), url('./assets/fonts/7LED.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Technology';
+  font-style: bold;
+  font-weight: 500;
+  src: local(''), url('./assets/fonts/Technology-Bold.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'segment7';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''), url('./assets/fonts/Segment7-4Gml.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'lcd-tygra';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''), url('./assets/fonts/LCD_TYGRA.ttf') format('ttf');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -37,6 +65,20 @@ li {
 a {
   text-decoration: none;
 }
+
+input[type='range'] {
+  display: block;
+  appearance: none;
+  height: 3px;
+  background-color: #a2abb3;
+  margin-top: 22px;
+  outline: none;
+  border-radius: 0.25rem;
+  transition: 0.3s;
+  cursor: pointer;
+  width: 100%;
+}
+
 .btn {
   width: 93px;
   min-height: 36px;
@@ -171,6 +213,12 @@ a {
   right: 0%;
 }
 
+.chip-temp,
+.board-temp {
+  font-family: segment7;
+  font-style: normal;
+  font-weight: 500;
+}
 .top-heater-text,
 .bottom-heater-text {
   min-width: 100px;

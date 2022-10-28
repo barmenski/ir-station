@@ -24,10 +24,10 @@ http
       var fileStream = fs.createReadStream(cssPath, 'UTF-8');
       response.writeHead(200, { 'Content-Type': 'text/css' });
       fileStream.pipe(response);
-    } else if (request.url.match('.woff2$')) {
+    } else if (request.url.match('.(woff(2)?|eot|ttf|otf)$')) {
       var fontPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(fontPath);
-      response.writeHead(200, { 'Content-Type': 'font/woff2' });
+      response.writeHead(200, { 'Content-Type': 'font' });
       fileStream.pipe(response);
     } else if (request.url.match('.ico$')) {
       var favPath = path.join(__dirname, 'src', request.url);
