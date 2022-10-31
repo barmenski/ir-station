@@ -3,20 +3,14 @@ import { Temperature } from './temp.js';
 export class Station {
   constructor() {
     this.temperature = new Temperature();
-    this.isPbFree = true;
+    this.mode = 'pb-';
+    this.constTemp = 0;
     this.powerTop = 0;
     this.powerBottom = 0;
-    // this.tempChip = this.temperature.getTempChip(
-    //   this.powerTop,
-    //   this.powerBottom
-    // );
-    // this.tempBoard = this.temperature.getTempBoard(
-    //   this.powerTop,
-    //   this.powerBottom
-    // );
     this.tempChip = 25;
     this.tempBoard = 25;
-
+    this.boardWidth = 150;
+    this.boardLength = 200;
     this.profilePb = [
       [120, 150],
       [210, 183],
@@ -29,11 +23,34 @@ export class Station {
     ];
     this.timerId = null;
     this.currTime = 0;
-    this.stepPower = 50;
+    this.stepPower = 100;
     this.delta = 0;
   }
 
+  init = () => {
+    if (document.getElementById('pb-').checked) {
+      this.mode = document.getElementById('pb-').value;
+    } else if (document.getElementById('pb+').checked) {
+      this.mode = document.getElementById('pb+').value;
+    } else if (document.getElementById('const-temp').checked) {
+      this.mode = document.getElementById('const-temp').value;
+    }
+
+    if (this.mode === 'const-temp') {
+      this.constTemp = document.getElementById('const-temp-set').value;
+    }
+
+    if (document.querySelector('.width-board').value) {
+      this.boardWidth = document.querySelector('.width-board').value;
+    } else this.boardWidth = 200;
+
+    if (document.querySelector('.length-board').value) {
+      this.boardLength = document.querySelector('.length-board').value;
+    } else this.boardLength = 200;
+  };
+
   start = () => {
+    this.init();
     this.timerId = setInterval(this.heat, 1000);
   };
 
@@ -45,23 +62,23 @@ export class Station {
 
   heat = () => {
     window.refresh();
-    console.log(
-      'time: ' +
-        this.currTime +
-        ' tempChip: ' +
-        this.tempChip +
-        ' powerBottom: ' +
-        this.powerBottom
-    );
+    // console.log(
+    //   'time: ' +
+    //     this.currTime +
+    //     ' tempChip: ' +
+    //     this.tempChip +
+    //     ' powerBottom: ' +
+    //     this.powerBottom
+    // );
 
-    if (this.isPbFree) {
+    if (this.mode === 'pb+') {
       var preHeatTime = this.profilePbFree[0][0];
       var preHeatTemp = this.profilePbFree[0][1];
       var waitTime = this.profilePbFree[1][0];
       var waitTemp = this.profilePbFree[1][1];
       var reflowTime = this.profilePbFree[2][0];
       var reflowTemp = this.profilePbFree[2][1];
-    } else {
+    } else if (this.mode === 'pb-') {
       var preHeatTime = this.profilePb[0][0];
       var preHeatTemp = this.profilePb[0][1];
       var waitTime = this.profilePb[1][0];
@@ -71,32 +88,44 @@ export class Station {
     }
     if (this.currTime < preHeatTime) {
       this.currTime++;
-      let rise = (preHeatTemp - 0) / (preHeatTime - 0);
+      let rise = Number(((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(1));
 
       let prevTemp = this.tempChip;
 
       this.tempBoard = this.temperature.getTempBoard(
         this.powerTop,
-        this.powerBottom
+        this.powerBottom,
+        this.boardWidth,
+        this.boardLength
       );
       this.tempChip = this.temperature.getTempChip(
         this.powerTop,
-        this.powerBottom
+        this.powerBottom,
+        this.boardWidth,
+        this.boardLength
       );
 
       this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
       //let currrise = Number((this.delta/(preHeatTime-this.currTime)).toFixed(1));
 
       console.log('rise: ' + rise, ' this.delta: ' + this.delta);
-      if (this.delta != 0) {
+      if (this.delta != 0 && this.powerBottom != 0) {
         let powerBottom = Number(
-          (this.powerBottom * (rise / this.delta) * 1.2).toFixed(1)
+          (this.powerBottom * (rise / this.delta)).toFixed(1)
         );
+        // console.log(
+        //   'this.powerBottom2: ',
+        //   this.powerBottom,
+        //   'this.delta: ',
+        //   this.delta
+        // );
         if (powerBottom <= 3420) {
           this.powerBottom = powerBottom;
+          console.log(rise / this.delta);
         } else this.powerBottom = 3420;
       } else {
         this.powerBottom = this.powerBottom + this.stepPower;
+        //console.log('this.powerBottom1: ', this.powerBottom);
       }
     } else {
       alert('Stop heating.');

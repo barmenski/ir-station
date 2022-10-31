@@ -16,18 +16,18 @@
         <div class="wrapper-station">
           <div class="top-heater">
             <p class="top-heater-text">
-              <span class="top-heater-power">-</span> W
+              <span class="top-heater-power">-</span>&nbspW
             </p>
           </div>
           <div class="chip">
-            <p class="chip-text"><span class="chip-temp">-</span>&#176C</p>
+            <p class="chip-text"><span class="chip-temp">-</span>&nbsp&#176C</p>
           </div>
           <div class="board">
-            <p class="board-text"><span class="board-temp">-</span>&#176C</p>
+            <p class="board-text"><span class="board-temp">-</span>&nbsp&#176C</p>
           </div>
           <div class="bottom-heater">
             <p class="bottom-heater-text">
-              <span class="bottom-heater-power">-</span>W
+              <span class="bottom-heater-power">-</span>&nbspW
             </p>
           </div>
         </div>
@@ -39,16 +39,20 @@
             name="form-control"
             method="post"
           ><div class="mode">
-            <input type="radio" name="pb+" /><label>Pb+</label>
-            <input type="radio" name="pb-" /><label>Pb-</label>
-            <label>Constant temperature
-            <input type="radio" name="const-temp" />
-            <output name="result">0</output>
-          </label>
+            <h4 class="mode-heading">Mode</h4>
+            <div class="mode-type"><input type="radio" id="pb+" name="mode" value="pb+" checked/><label for="pb+">Pb+</label></div>
+            <div class="mode-type"><input type="radio" id="pb-" name="mode" value="pb-"/><label for="pb-">Pb-</label></div>
+            <div class="mode-type"><input type="radio" id="const-temp" name="mode" value="const-temp"/><label for="const-temp">Constant temperature</label></div>
+            <div class="mode-type">
+              <div class="manual-set">
+                <input name="manual-set-temp" data-sizing="px" type="range" min="0" max="300" value="0">
+                <output name="manual-set-temp" id="const-temp-set">0<span class="const-temp-temp">&nbsp&#176C</span></output>
+              </div>
+            </div>
+            
           </div>
-          <div class="manual-set">
-            <input name="manual-set-temp" data-sizing="px" type="range" min="0" max="300" value="0">
-          </div>
+          <div class="size-board">
+            <h4 class="size-board-heading">Size of board:</h4>
             <input
               type="number"
               class="width-board"
@@ -57,10 +61,11 @@
             />
             <input
               type="number"
-              class="height-board"
-              placeholder="Height of board"
+              class="length-board"
+              placeholder="Length of board"
               max="210"
             />
+          </div>
             <button class="form-control-submit_btn btn" type="submit" disabled>
               Submit
             </button>
@@ -70,6 +75,7 @@
             <button class="form-control-start_btn btn" type="submit">
               Start
             </button>
+          
           </form>
         </div>
         <div class="wrapper-graph">

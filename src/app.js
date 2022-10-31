@@ -21,6 +21,7 @@ window.power_bottom_graph = new Graph(POWER_BOTTOM_CANVAS, 'Power bottom');
 
 START_BTN.addEventListener('click', (event) => {
   event.preventDefault();
+  window.station.init();
   window.station.start();
 });
 CANCEL_BTN.addEventListener('click', (event) => {

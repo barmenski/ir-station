@@ -19,14 +19,14 @@
   font-family: 'led7';
   font-style: normal;
   font-weight: 500;
-  src: local(''), url('./assets/fonts/7LED.ttf') format('ttf');
+  src: local(''), url('./assets/fonts/7LED.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Technology';
   font-style: bold;
   font-weight: 500;
-  src: local(''), url('./assets/fonts/Technology-Bold.ttf') format('ttf');
+  src: local(''), url('./assets/fonts/Technology-Bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -66,6 +66,10 @@ a {
   text-decoration: none;
 }
 
+input[type='radio'] {
+  margin: 5px;
+}
+
 input[type='range'] {
   display: block;
   appearance: none;
@@ -79,10 +83,17 @@ input[type='range'] {
   width: 100%;
 }
 
+output[name='manual-set-temp'] {
+  font-family: Technology;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+}
+
 .btn {
   width: 93px;
   min-height: 36px;
-  margin-left: 17px;
+  margin: 10px;
   background: #e3f2fd;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.24);
   border-radius: 4px;
@@ -156,10 +167,49 @@ input[type='range'] {
   background-color: antiquewhite;
 }
 
-.random-infl {
+.mode,
+.size-board {
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  margin: 20px 10px;
+  padding: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  border: 1px dotted #313538;
+}
+
+.mode-heading,
+.size-board-heading {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 0%;
+  left: 50%;
+  background-color: antiquewhite;
+  padding: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.mode-type {
+  width: 100%;
+}
+
+.manual-set {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+}
+
+.width-board,
+.length-board {
+  margin: 7px;
 }
 
 .wrapper-graph {
@@ -211,13 +261,18 @@ input[type='range'] {
   position: absolute;
   transform: translate(150%, -50%);
   right: 0%;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 29px;
 }
 
 .chip-temp,
 .board-temp {
-  font-family: segment7;
+  font-family: Technology;
   font-style: normal;
   font-weight: 500;
+  font-size: 30px;
 }
 .top-heater-text,
 .bottom-heater-text {

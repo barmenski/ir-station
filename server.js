@@ -24,10 +24,20 @@ http
       var fileStream = fs.createReadStream(cssPath, 'UTF-8');
       response.writeHead(200, { 'Content-Type': 'text/css' });
       fileStream.pipe(response);
-    } else if (request.url.match('.(woff(2)?|eot|ttf|otf)$')) {
+      // } else if (request.url.match('.(woff(2)?|eot|ttf|otf)$')) {
+      //   var fontPath = path.join(__dirname, 'src', request.url);
+      //   var fileStream = fs.createReadStream(fontPath);
+      //   response.writeHead(200, { 'Content-Type': 'font' });
+      //   fileStream.pipe(response);
+    } else if (request.url.match('.woff2$')) {
       var fontPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(fontPath);
-      response.writeHead(200, { 'Content-Type': 'font' });
+      response.writeHead(200, { 'Content-Type': 'font/woff2' });
+      fileStream.pipe(response);
+    } else if (request.url.match('.ttf$')) {
+      var fontPath = path.join(__dirname, 'src', request.url);
+      var fileStream = fs.createReadStream(fontPath);
+      response.writeHead(200, { 'Content-Type': 'font/ttf' });
       fileStream.pipe(response);
     } else if (request.url.match('.ico$')) {
       var favPath = path.join(__dirname, 'src', request.url);
