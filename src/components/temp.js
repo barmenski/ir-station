@@ -57,7 +57,7 @@ export class Temperature {
     console.log('deltaTemp: ', deltaTemp);
     //console.log('power: ', this.tempCap * weight);
     if (this.tempBoard >= this.tempEnv) {
-      this.tempBoard = Number((this.tempBoard - 0.5 + deltaTemp).toFixed(1));
+      this.tempBoard = Math.round(this.tempBoard - 0.5 + deltaTemp);
     } else {
       this.tempBoard = this.tempEnv;
     }

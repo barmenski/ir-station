@@ -25,6 +25,7 @@ export class Station {
     this.currTime = 0;
     this.stepPower = 100;
     this.delta = 0;
+    this.timer = 0;
   }
 
   init = () => {
@@ -47,6 +48,7 @@ export class Station {
     if (document.querySelector('.length-board').value) {
       this.boardLength = document.querySelector('.length-board').value;
     } else this.boardLength = 200;
+    this.timer = document.querySelector('.timer');
   };
 
   start = () => {
@@ -62,14 +64,6 @@ export class Station {
 
   heat = () => {
     window.refresh();
-    // console.log(
-    //   'time: ' +
-    //     this.currTime +
-    //     ' tempChip: ' +
-    //     this.tempChip +
-    //     ' powerBottom: ' +
-    //     this.powerBottom
-    // );
 
     if (this.mode === 'pb+') {
       var preHeatTime = this.profilePbFree[0][0];
@@ -86,9 +80,11 @@ export class Station {
       var reflowTime = this.profilePb[2][0];
       var reflowTemp = this.profilePb[2][1];
     }
-    if (this.currTime < preHeatTime) {
+
+    if (this.tempChip < preHeatTemp) {
+      this.timer.innerHTML = `${this.currTime} s`;
       this.currTime++;
-      let rise = Number(((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(1));
+      let rise = Math.round((preHeatTemp - 25) / (preHeatTime - 0));
 
       let prevTemp = this.tempChip;
 
@@ -106,26 +102,17 @@ export class Station {
       );
 
       this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
-      //let currrise = Number((this.delta/(preHeatTime-this.currTime)).toFixed(1));
 
       console.log('rise: ' + rise, ' this.delta: ' + this.delta);
       if (this.delta != 0 && this.powerBottom != 0) {
-        let powerBottom = Number(
-          (this.powerBottom * (rise / this.delta)).toFixed(1)
-        );
-        // console.log(
-        //   'this.powerBottom2: ',
-        //   this.powerBottom,
-        //   'this.delta: ',
-        //   this.delta
-        // );
+        let powerBottom = Math.round(this.powerBottom * (rise / this.delta));
+
         if (powerBottom <= 3420) {
           this.powerBottom = powerBottom;
           console.log(rise / this.delta);
         } else this.powerBottom = 3420;
       } else {
         this.powerBottom = this.powerBottom + this.stepPower;
-        //console.log('this.powerBottom1: ', this.powerBottom);
       }
     } else {
       alert('Stop heating.');

@@ -225,6 +225,7 @@ output[name='manual-set-temp'] {
   justify-content: center;
   align-items: center;
   border: 2px solid #bfbfbf;
+  background-color: #dfdfdf;
   margin: 10px;
 }
 
@@ -232,10 +233,55 @@ output[name='manual-set-temp'] {
   width: 20px;
   height: 5px;
   border: 2px solid black;
+  background-color: black;
   margin-top: 50px;
   margin-bottom: 5px;
   position: relative;
 }
+
+.substrate {
+  width: 60px;
+  height: 1px;
+  border: 2px solid green;
+  margin: 5px;
+  position: absolute;
+  transform: translate(-46%, -50%);
+  top: 0%;
+  left: 0%;
+  background-color: green;
+}
+
+.substrate-balls {
+  position: absolute;
+  transform: translate(0%, 50%);
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ball {
+  width: 4px;
+  height: 4px;
+  margin: 0.5px;
+  background: silver;
+  border: 0.1px solid black;
+  border-radius: 50%;
+}
+/* .chip::after {
+  content: '';
+  width: 60px;
+  height: 5px;
+  border: 2px solid green;
+  margin: 5px;
+  position: absolute;
+  transform: translate(50%, -50%);
+  top: 0%;
+  left: 0%;
+  background-color: green;
+} */
 
 .board {
   width: 350px;
@@ -243,6 +289,7 @@ output[name='manual-set-temp'] {
   border: 2px solid green;
   margin: 5px;
   position: relative;
+  background-color: green;
 }
 
 .bottom-heater {
@@ -252,6 +299,7 @@ output[name='manual-set-temp'] {
   justify-content: center;
   align-items: center;
   border: 2px solid #bfbfbf;
+  background-color: #dfdfdf;
   margin: 10px;
 }
 
@@ -259,12 +307,33 @@ output[name='manual-set-temp'] {
 .board-text {
   min-width: 100px;
   position: absolute;
-  transform: translate(150%, -50%);
+  transform: translate(150%, -130%);
+  top: 0%;
   right: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-size: 29px;
+}
+
+.chip-text::before {
+  content: '';
+  position: absolute;
+  width: 50px;
+  top: 95%;
+  left: -45%;
+  border-top: 1px solid red;
+  transform: rotate(-39deg);
+}
+
+.board-text::before {
+  content: '';
+  position: absolute;
+  width: 72px;
+  top: 90%;
+  left: -70%;
+  border-top: 1px solid red;
+  transform: rotate(336deg);
 }
 
 .chip-temp,
@@ -276,10 +345,19 @@ output[name='manual-set-temp'] {
 }
 .top-heater-text,
 .bottom-heater-text {
-  min-width: 100px;
+  min-width: 65px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  background-color: white;
+}
+
+.timer {
+  min-width: 65px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
 }
 
 .heading-control,
