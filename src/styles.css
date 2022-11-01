@@ -80,7 +80,7 @@ input[type='range'] {
   border-radius: 0.25rem;
   transition: 0.3s;
   cursor: pointer;
-  width: 100%;
+  max-width: 100%;
 }
 
 output[name='manual-set-temp'] {
@@ -349,6 +349,10 @@ output[name='manual-set-temp'] {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
   background-color: white;
 }
 

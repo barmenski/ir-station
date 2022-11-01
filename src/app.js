@@ -14,6 +14,8 @@ const BOARD_TEMP = document.querySelector('.board-temp');
 const TEMP_CANVAS = document.querySelector('.temp-canvas');
 const POWER_TOP_CANVAS = document.querySelector('.power-top-canvas');
 const POWER_BOTTOM_CANVAS = document.querySelector('.power-bottom-canvas');
+const INPUT_RANGE = document.querySelector("input[name='manual-set-temp']");
+const OUTPUT_RANGE = document.querySelector("output[name='manual-set-temp']");
 
 window.temp_graph = new Graph(TEMP_CANVAS, 'Chip temp.');
 window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'delta');
@@ -27,6 +29,11 @@ START_BTN.addEventListener('click', (event) => {
 CANCEL_BTN.addEventListener('click', (event) => {
   event.preventDefault();
   window.station.stop();
+});
+
+INPUT_RANGE.addEventListener('input', (event) => {
+  event.preventDefault();
+  OUTPUT_RANGE.innerHTML = `${INPUT_RANGE.value} °C`;
 });
 
 window.refresh = () => {

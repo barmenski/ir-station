@@ -49,6 +49,7 @@ export class Station {
       this.boardLength = document.querySelector('.length-board').value;
     } else this.boardLength = 200;
     this.timer = document.querySelector('.timer');
+    // this.manualSetTemp = document.querySelector("intput[name='manual-set-temp']");
   };
 
   start = () => {
