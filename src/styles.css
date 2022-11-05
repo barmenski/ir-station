@@ -74,13 +74,13 @@ input[type='range'] {
   display: block;
   appearance: none;
   height: 3px;
+  width: 80%;
   background-color: #a2abb3;
   margin-top: 22px;
   outline: none;
   border-radius: 0.25rem;
   transition: 0.3s;
   cursor: pointer;
-  max-width: 100%;
 }
 
 output[name='manual-set-temp'] {
@@ -108,6 +108,7 @@ output[name='manual-set-temp'] {
   letter-spacing: 1.25px;
   text-transform: uppercase;
   color: #2c4c66;
+  cursor: pointer;
 }
 .header {
   min-height: 64px;
@@ -201,7 +202,8 @@ output[name='manual-set-temp'] {
   width: 100%;
 }
 
-.manual-set {
+.manual-set,
+.speed-set {
   display: flex;
   justify-content: space-between;
   align-items: center;

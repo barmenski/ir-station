@@ -50,12 +50,11 @@ export class Temperature {
     let weight = Number(
       (((boardWidth * boardLength * 2) / 1000000000) * this.density).toFixed(1)
     );
-    console.log('weight: ', weight);
+
     let deltaTemp = Number(
       (((powerTop + powerBottom) * 1) / (this.tempCap * weight)).toFixed(1)
     );
-    console.log('deltaTemp: ', deltaTemp);
-    //console.log('power: ', this.tempCap * weight);
+
     if (this.tempBoard >= this.tempEnv) {
       this.tempBoard = Math.round(this.tempBoard - 0.5 + deltaTemp);
     } else {
