@@ -50,8 +50,8 @@ INPUT_SPEED_RANGE.addEventListener('input', (event) => {
 window.refresh = () => {
   TOP_POWER.innerHTML = `${window.station.powerTop}`;
   BOTTOM_POWER.innerHTML = `${window.station.powerBottom}`;
-  CHIP_TEMP.innerHTML = `${window.station.tempChip}`;
-  BOARD_TEMP.innerHTML = `${window.station.tempBoard}`;
+  CHIP_TEMP.innerHTML = `${Math.round(window.station.tempChip)}`;
+  BOARD_TEMP.innerHTML = `${Math.round(window.station.tempBoard)}`;
   window.temp_graph.drawGraph(
     window.station.currTime * 0.5,
     -0.25 * window.station.tempChip

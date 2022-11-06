@@ -5,14 +5,11 @@ export class Station {
   constructor() {
     this.temperature = new Temperature();
     this.input_panel = new Input_panel();
-    // this.mode = 'pb-';
-    // this.constTemp = 0;
     this.powerTop = 0;
-    this.powerBottom = 0;
+    this.powerBottom = 100;
     this.tempChip = 25;
     this.tempBoard = 25;
-    // this.boardWidth = 150;
-    // this.boardLength = 200;
+
     // this.profilePb = [
     //   [120, 150],
     //   [210, 183],
@@ -25,34 +22,77 @@ export class Station {
     // ];
     this.currTime = 0;
     this.speed = 1;
-    this.stepPower = 100;
+    this.stepPower = 50;
     this.delta = 0;
+    this.rise = 0;
     this.timerStopped = true;
   }
 
   init = () => {
-    // if (document.getElementById('pb-').checked) {
-    //   this.mode = document.getElementById('pb-').value;
-    // } else if (document.getElementById('pb+').checked) {
-    //   this.mode = document.getElementById('pb+').value;
-    // } else if (document.getElementById('const-temp').checked) {
-    //   this.mode = document.getElementById('const-temp').value;
-    // }
-
-    // if (this.mode === 'const-temp') {
-    //   this.constTemp = document.getElementById('const-temp-set').value;
-    // }
-
-    // if (document.querySelector('.width-board').value) {
-    //   this.boardWidth = document.querySelector('.width-board').value;
-    // } else this.boardWidth = 200;
-
-    // if (document.querySelector('.length-board').value) {
-    //   this.boardLength = document.querySelector('.length-board').value;
-    // } else this.boardLength = 200;
     this.timer = document.querySelector('.timer');
     this.speed = 1;
-    // this.manualSetTemp = document.querySelector("intput[name='manual-set-temp']");
+  };
+
+  analize = () => {
+    if (this.delta > 0 && this.powerBottom != 0) {
+      console.log(
+        `|analize| \nthis.rise ${this.rise} \nthis.delta: ${this.delta} \nthis.powerBottom ${this.powerBottom}`
+      );
+      let powerBottom = Math.round(this.powerBottom * (this.rise / this.delta));
+      console.log(`|calc| \npowerBottom: ${powerBottom}`);
+      powerBottom <= 3420
+        ? (this.powerBottom = powerBottom)
+        : (this.powerBottom = 3420);
+    } else {
+      console.log(
+        `::check:: \nthis.delta: ${this.delta} \nthis.powerBottom: ${this.powerBottom}`
+      );
+      this.powerBottom = this.powerBottom + this.stepPower;
+    }
+    console.log(`|accepted| \nthis.powerBottom: ${this.powerBottom}`);
+  };
+
+  // analize = () => {
+  //   let rd = this.rise / this.delta;
+  //   let powerBottom = 0;
+  //   if (this.delta > 0) {
+  //     if (rd > 2) {
+  //       powerBottom = Math.round(this.powerBottom + this.powerBottom * 0.7);
+  //     } else if (rd > 1 && rd <= 2) {
+  //       powerBottom = Math.round(this.powerBottom + this.powerBottom * 0.5);
+  //     } else if (rd < 1 && rd > 0) {
+  //       powerBottom = Math.round(this.powerBottom - this.powerBottom * 0.05);
+  //     }
+  //   } else {
+  //     if (rd > -1 && rd < 0) {
+  //       powerBottom = Math.round(this.powerBottom + this.powerBottom * 0.05);
+  //     } else if (rd > -2 && rd <= -1) {
+  //       powerBottom = Math.round(this.powerBottom + this.powerBottom * 0.075);
+  //     } else if (rd <= -2) {
+  //       powerBottom = Math.round(this.powerBottom + this.powerBottom * 0.1);
+  //     }
+  //   }
+  //   powerBottom <= 3420
+  //     ? (this.powerBottom = powerBottom)
+  //     : (this.powerBottom = 3420);
+  //   console.log(
+  //     `this.rise: ${this.rise} \nthis.delta ${this.delta} \nthis.powerBottom ${this.powerBottom}`
+  //   );
+  // };
+
+  getTemperature = () => {
+    this.tempBoard = this.temperature.getTempBoard(
+      this.powerTop,
+      this.powerBottom,
+      this.input_panel.boardWidth,
+      this.input_panel.boardLength
+    );
+    this.tempChip = this.temperature.getTempChip(
+      this.powerTop,
+      this.powerBottom,
+      this.input_panel.boardWidth,
+      this.input_panel.boardLength
+    );
   };
 
   heat = () => {
@@ -78,117 +118,43 @@ export class Station {
     this.currTime++;
 
     if (this.tempChip < preHeatTemp) {
-      let rise = Math.round((preHeatTemp - 25) / (preHeatTime - 0));
+      //--------------------1
+      this.rise = Number(((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(1));
       let prevTemp = this.tempChip;
+      this.getTemperature();
 
-      this.tempBoard = this.temperature.getTempBoard(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
-      );
-      this.tempChip = this.temperature.getTempChip(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
-      );
-
-      this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
-
-      if (this.delta != 0 && this.powerBottom != 0) {
-        let powerBottom = Math.round(this.powerBottom * (rise / this.delta));
-        powerBottom <= 3420
-          ? (this.powerBottom = powerBottom)
-          : (this.powerBottom = 3420);
-      } else {
-        this.powerBottom = this.powerBottom + this.stepPower;
-      }
+      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
+      this.analize();
     } else if (this.tempChip >= preHeatTemp && this.tempChip <= waitTemp) {
-      //console.log(`if ${this.tempChip} ${waitTemp}`);
-      let rise = Math.round(
-        (waitTemp - preHeatTemp) / (waitTime - preHeatTime)
+      //-------------------------------------------------------------------2
+      this.rise = Number(
+        ((waitTemp - preHeatTemp) / (waitTime - preHeatTime)).toFixed(1)
       );
       let prevTemp = this.tempChip;
+      this.getTemperature();
 
-      this.tempBoard = this.temperature.getTempBoard(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
+      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
+      this.analize();
+    } else if (this.tempChip >= waitTemp && this.tempChip <= reflowTemp) {
+      //-----------3
+      this.rise = Number(
+        ((reflowTemp - waitTemp) / (reflowTime - waitTime)).toFixed(1)
       );
-      this.tempChip = this.temperature.getTempChip(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
-      );
-
-      this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
-      let powerBottom = Math.round(this.powerBottom * (rise / this.delta));
-
-      powerBottom <= 3420
-        ? (this.powerBottom = powerBottom)
-        : (this.powerBottom = 3420);
-    } else if (this.currTime > waitTime && this.currTime < reflowTime) {
-      let rise = Math.round((reflowTemp - waitTemp) / (reflowTime - waitTime));
       let prevTemp = this.tempChip;
+      this.getTemperature();
 
-      this.tempBoard = this.temperature.getTempBoard(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
-      );
-      this.tempChip = this.temperature.getTempChip(
-        this.powerTop,
-        this.powerBottom,
-        this.input_panel.boardWidth,
-        this.input_panel.boardLength
-      );
-
-      this.delta = Math.abs(Number((this.tempChip - prevTemp).toFixed(1)));
-      let powerBottom = Math.round(this.powerBottom * (rise / this.delta));
-
-      powerBottom <= 3420
-        ? (this.powerBottom = powerBottom)
-        : (this.powerBottom = 3420);
+      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
+      this.analize();
     } else {
       this.stop();
       alert('Stop heating.');
     }
-    /*
-    if (this.currTime > reflowTime && this.currTime < 330) {
-      this.currTime++;
-      let riseTemp = -1;
-      let prevTemp = this.tempChip;
-
-      this.tempChip = this.temperature.getTempChip(
-        this.powerTop,
-        this.powerBottom
-      );
-      let this.delta = this.tempChip - prevTemp;
-
-      if (this.delta > riseTemp && this.delta != 0) {
-        this.powerBottom = this.powerBottom - this.stepPower * this.delta * 0.1;
-      }
-    }
-    */
   };
 
   start = () => {
     this.init();
     this.input_panel.init();
 
-    //   this.timerId = setInterval(() => {
-    //     this.heat();
-
-    //     console.log(
-    //       `this.speed: ${this.speed}, qs speed= ${
-    //         document.querySelector("input[name='manual-set-speed']").value
-    //       }`
-    //     );
-    //   }, this.speed * 1000);
     this.timerStopped = false;
     this.timerFunc = () => {
       setTimeout(() => {

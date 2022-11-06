@@ -52,11 +52,11 @@ export class Temperature {
     );
 
     let deltaTemp = Number(
-      (((powerTop + powerBottom) * 1) / (this.tempCap * weight)).toFixed(1)
+      (((powerTop + powerBottom) * 0.5) / (this.tempCap * weight)).toFixed(1)
     );
 
     if (this.tempBoard >= this.tempEnv) {
-      this.tempBoard = Math.round(this.tempBoard - 0.5 + deltaTemp);
+      this.tempBoard = Number((this.tempBoard - 0.7 + deltaTemp).toFixed(2));
     } else {
       this.tempBoard = this.tempEnv;
     }
