@@ -22,7 +22,8 @@ export class Station {
     // ];
     this.currTime = 0;
     this.speed = 1;
-    this.stepPower = 50;
+    this.powerSet = 0;
+    this.stepPower = 10;
     this.delta = 0;
     this.rise = 0;
     this.timerStopped = true;
@@ -33,23 +34,42 @@ export class Station {
     this.speed = 1;
   };
 
+  // analize = () => {
+  //   if (this.delta > 0 && this.powerBottom != 0) {
+  //     console.log(
+  //       `|analize| \nthis.rise ${this.rise} \nthis.delta: ${this.delta} \nthis.powerBottom ${this.powerBottom}`
+  //     );
+  //     let powerBottom = Math.round(this.powerBottom * (this.rise / this.delta));
+  //     console.log(`|calc| \npowerBottom: ${powerBottom}`);
+  //     powerBottom <= 3420
+  //       ? (this.powerBottom = powerBottom)
+  //       : (this.powerBottom = 3420);
+  //   } else {
+  //     console.log(
+  //       `::check:: \nthis.delta: ${this.delta} \nthis.powerBottom: ${this.powerBottom}`
+  //     );
+  //     this.powerBottom = this.powerBottom + this.stepPower;
+  //   }
+  //   console.log(`|accepted| \nthis.powerBottom: ${this.powerBottom}`);
+  // };
+
   analize = () => {
-    if (this.delta > 0 && this.powerBottom != 0) {
-      console.log(
-        `|analize| \nthis.rise ${this.rise} \nthis.delta: ${this.delta} \nthis.powerBottom ${this.powerBottom}`
-      );
-      let powerBottom = Math.round(this.powerBottom * (this.rise / this.delta));
-      console.log(`|calc| \npowerBottom: ${powerBottom}`);
-      powerBottom <= 3420
-        ? (this.powerBottom = powerBottom)
-        : (this.powerBottom = 3420);
+    console.log(
+      `|analize| \nthis.rise ${this.rise} \nthis.delta: ${this.delta} \nthis.powerBottom ${this.powerBottom}`
+    );
+    if (this.delta > this.rise * 2) {
+      var powerBottom = this.powerBottom - this.powerBottom * 0.01;
     } else {
-      console.log(
-        `::check:: \nthis.delta: ${this.delta} \nthis.powerBottom: ${this.powerBottom}`
+      var powerBottom = Math.round(
+        this.powerBottom +
+          this.powerBottom * ((this.rise - this.delta) / this.rise)
       );
-      this.powerBottom = this.powerBottom + this.stepPower;
     }
-    console.log(`|accepted| \nthis.powerBottom: ${this.powerBottom}`);
+    console.log(`|calc| \npowerBottom: ${powerBottom}`);
+    powerBottom <= 3420
+      ? (this.powerBottom = powerBottom)
+      : (this.powerBottom = 3420);
+    powerBottom < 0 ? (this.powerBottom = 0) : (this.powerBottom = powerBottom);
   };
 
   // analize = () => {
@@ -97,57 +117,66 @@ export class Station {
 
   heat = () => {
     window.refresh();
-
-    if (this.input_panel.mode === 'pb+') {
-      var preHeatTime = this.input_panel.profilePb[0][0];
-      var preHeatTemp = this.input_panel.profilePb[0][1];
-      var waitTime = this.input_panel.profilePb[1][0];
-      var waitTemp = this.input_panel.profilePb[1][1];
-      var reflowTime = this.input_panel.profilePb[2][0];
-      var reflowTemp = this.input_panel.profilePb[2][1];
-    } else if (this.input_panel.mode === 'pb-') {
-      var preHeatTime = this.input_panel.profilePbFree[0][0];
-      var preHeatTemp = this.input_panel.profilePbFree[0][1];
-      var waitTime = this.input_panel.profilePbFree[1][0];
-      var waitTemp = this.input_panel.profilePbFree[1][1];
-      var reflowTime = this.input_panel.profilePbFree[2][0];
-      var reflowTemp = this.input_panel.profilePbFree[2][1];
-    }
-
     this.timer.innerHTML = `${this.currTime} s`;
     this.currTime++;
+    switch (this.input_panel.mode) {
+      case 'pb+':
+      case 'pb-':
+        if (this.input_panel.mode === 'pb+') {
+          var preHeatTime = this.input_panel.profilePb[0][0];
+          var preHeatTemp = this.input_panel.profilePb[0][1];
+          var waitTime = this.input_panel.profilePb[1][0];
+          var waitTemp = this.input_panel.profilePb[1][1];
+          var reflowTime = this.input_panel.profilePb[2][0];
+          var reflowTemp = this.input_panel.profilePb[2][1];
+        } else if (this.input_panel.mode === 'pb-') {
+          var preHeatTime = this.input_panel.profilePbFree[0][0];
+          var preHeatTemp = this.input_panel.profilePbFree[0][1];
+          var waitTime = this.input_panel.profilePbFree[1][0];
+          var waitTemp = this.input_panel.profilePbFree[1][1];
+          var reflowTime = this.input_panel.profilePbFree[2][0];
+          var reflowTemp = this.input_panel.profilePbFree[2][1];
+        }
 
-    if (this.tempChip < preHeatTemp) {
-      //--------------------1
-      this.rise = Number(((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(1));
-      let prevTemp = this.tempChip;
-      this.getTemperature();
+        if (this.tempChip < preHeatTemp) {
+          //--------------------1
+          this.rise = Number(
+            ((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(2)
+          );
+          let prevTemp = this.tempChip;
+          this.getTemperature();
 
-      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
-      this.analize();
-    } else if (this.tempChip >= preHeatTemp && this.tempChip <= waitTemp) {
-      //-------------------------------------------------------------------2
-      this.rise = Number(
-        ((waitTemp - preHeatTemp) / (waitTime - preHeatTime)).toFixed(1)
-      );
-      let prevTemp = this.tempChip;
-      this.getTemperature();
+          this.delta = Number((this.tempChip - prevTemp).toFixed(2));
+          this.analize();
+        } else if (this.tempChip >= preHeatTemp && this.tempChip <= waitTemp) {
+          //-------------------------------------------------------------------2
+          this.rise = Number(
+            ((waitTemp - preHeatTemp) / (waitTime - preHeatTime)).toFixed(2)
+          );
+          let prevTemp = this.tempChip;
+          this.getTemperature();
 
-      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
-      this.analize();
-    } else if (this.tempChip >= waitTemp && this.tempChip <= reflowTemp) {
-      //-----------3
-      this.rise = Number(
-        ((reflowTemp - waitTemp) / (reflowTime - waitTime)).toFixed(1)
-      );
-      let prevTemp = this.tempChip;
-      this.getTemperature();
+          this.delta = Number((this.tempChip - prevTemp).toFixed(2));
+          this.analize();
+          // } else if (this.tempChip >= waitTemp && this.tempChip <= reflowTemp) {
+          //   //-----------3
+          //   this.rise = Number(
+          //     ((reflowTemp - waitTemp) / (reflowTime - waitTime)).toFixed(1)
+          //   );
+          //   let prevTemp = this.tempChip;
+          //   this.getTemperature();
 
-      this.delta = Number((this.tempChip - prevTemp).toFixed(1));
-      this.analize();
-    } else {
-      this.stop();
-      alert('Stop heating.');
+          //   this.delta = Number((this.tempChip - prevTemp).toFixed(1));
+          //   this.analize();
+        } else {
+          this.stop();
+          alert('Stop heating.');
+        }
+        break;
+      case 'const-pow':
+        this.powerBottom = this.powerSet;
+        this.getTemperature();
+        break;
     }
   };
 

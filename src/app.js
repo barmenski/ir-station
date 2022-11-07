@@ -22,6 +22,12 @@ const INPUT_SPEED_RANGE = document.querySelector(
 const OUTPUT_SPEED_RANGE = document.querySelector(
   "OUTput[name='manual-set-speed']"
 );
+const INPUT_POWER_RANGE = document.querySelector(
+  "input[name='manual-set-pow']"
+);
+const OUTPUT_POWER_RANGE = document.querySelector(
+  "OUTput[name='manual-set-pow']"
+);
 
 window.temp_graph = new Graph(TEMP_CANVAS, 'Chip temp.');
 window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'delta');
@@ -45,6 +51,12 @@ INPUT_SPEED_RANGE.addEventListener('input', (event) => {
   event.preventDefault();
   OUTPUT_SPEED_RANGE.innerHTML = `${INPUT_SPEED_RANGE.value}`;
   window.station.speed = Number(INPUT_SPEED_RANGE.value);
+});
+
+INPUT_POWER_RANGE.addEventListener('input', (event) => {
+  event.preventDefault();
+  OUTPUT_POWER_RANGE.innerHTML = `${INPUT_POWER_RANGE.value}`;
+  window.station.powerSet = Number(INPUT_POWER_RANGE.value);
 });
 
 window.refresh = () => {

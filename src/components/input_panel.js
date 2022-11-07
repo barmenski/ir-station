@@ -2,10 +2,11 @@ export class Input_panel {
   constructor() {
     this.mode = 'pb-';
     this.constTemp = 0;
+    this.constPow = 0;
     this.boardWidth = 150;
     this.boardLength = 200;
     this.profilePb = [
-      [120, 150],
+      [130, 150],
       [210, 183],
       [270, 183],
     ];
@@ -23,6 +24,12 @@ export class Input_panel {
       this.mode = document.getElementById('pb+').value;
     } else if (document.getElementById('const-temp').checked) {
       this.mode = document.getElementById('const-temp').value;
+    } else if (document.getElementById('const-pow').checked) {
+      this.mode = document.getElementById('const-pow').value;
+    }
+
+    if (this.mode === 'const-pow') {
+      this.constPow = document.getElementById('const-pow-set').value;
     }
 
     if (this.mode === 'const-temp') {
