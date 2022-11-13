@@ -1,7 +1,9 @@
 import { Station } from './components/station.js';
 import { Graph } from './components/graph.js';
+import { Input_panel } from './components/input_panel.js';
 
 window.station = new Station();
+let InputPanel = new Input_panel();
 
 const START_BTN = document.querySelector('.form-control-start_btn');
 const CANCEL_BTN = document.querySelector('.form-control-cancel_btn');
@@ -14,24 +16,11 @@ const BOARD_TEMP = document.querySelector('.board-temp');
 const TEMP_CANVAS = document.querySelector('.temp-canvas');
 const POWER_TOP_CANVAS = document.querySelector('.power-top-canvas');
 const POWER_BOTTOM_CANVAS = document.querySelector('.power-bottom-canvas');
-const INPUT_RANGE = document.querySelector("input[name='manual-set-temp']");
-const OUTPUT_RANGE = document.querySelector("output[name='manual-set-temp']");
-const INPUT_SPEED_RANGE = document.querySelector(
-  "input[name='manual-set-speed']"
-);
-const OUTPUT_SPEED_RANGE = document.querySelector(
-  "OUTput[name='manual-set-speed']"
-);
-const INPUT_POWER_RANGE = document.querySelector(
-  "input[name='manual-set-pow']"
-);
-const OUTPUT_POWER_RANGE = document.querySelector(
-  "OUTput[name='manual-set-pow']"
-);
 
 window.temp_graph = new Graph(TEMP_CANVAS, 'Chip temp.');
 window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'delta');
 window.power_bottom_graph = new Graph(POWER_BOTTOM_CANVAS, 'Power bottom');
+InputPanel.init();
 
 START_BTN.addEventListener('click', (event) => {
   event.preventDefault();
@@ -40,23 +29,6 @@ START_BTN.addEventListener('click', (event) => {
 CANCEL_BTN.addEventListener('click', (event) => {
   event.preventDefault();
   window.station.timerStopped = true;
-});
-
-INPUT_RANGE.addEventListener('input', (event) => {
-  event.preventDefault();
-  OUTPUT_RANGE.innerHTML = `${INPUT_RANGE.value} °C`;
-});
-
-INPUT_SPEED_RANGE.addEventListener('input', (event) => {
-  event.preventDefault();
-  OUTPUT_SPEED_RANGE.innerHTML = `${INPUT_SPEED_RANGE.value}`;
-  window.station.speed = Number(INPUT_SPEED_RANGE.value);
-});
-
-INPUT_POWER_RANGE.addEventListener('input', (event) => {
-  event.preventDefault();
-  OUTPUT_POWER_RANGE.innerHTML = `${INPUT_POWER_RANGE.value}`;
-  window.station.powerSet = Number(INPUT_POWER_RANGE.value);
 });
 
 window.refresh = () => {

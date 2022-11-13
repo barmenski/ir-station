@@ -53,22 +53,21 @@
             <h4 class="mode-heading">Mode</h4>
             <div class="mode-type"><input type="radio" id="pb+" name="mode" value="pb+" checked/><label for="pb+">Pb+</label></div>
             <div class="mode-type"><input type="radio" id="pb-" name="mode" value="pb-"/><label for="pb-">Pb-</label></div>
-            <div class="mode-type"><input type="radio" id="const-temp" name="mode" value="const-temp"/><label for="const-temp">Constant temperature</label></div>
-            <div class="mode-type"><input type="radio" id="const-pow" name="mode" value="const-pow"/><label for="const-pow">Constant power</label></div>
-            <div class="mode-type">
+            <div class="mode-type"><input type="radio" id="const-temp" name="mode" value="const-temp"/><label for="const-temp">Constant temperature</label>
               <div class="manual-set">
-                <span>Constant temperature set:</span>
                 <input name="manual-set-temp" data-sizing="px" type="range" min="0" max="300" value="0">
                 <output name="manual-set-temp" id="const-temp-set">0&nbsp&#176C</output>
               </div>
             </div>
-            <div class="mode-type">
-              <div class="manual-set">
-                <span>Constant power set:</span>
-                <input name="manual-set-pow" data-sizing="px" type="range" min="0" max="3420" value="0">
-                <output name="manual-set-pow" id="const-pow-set">0</output>
+            <div class="mode-type"><input type="radio" id="const-pow" name="mode" value="const-pow"/><label for="const-pow">Constant power</label>
+              <div class="mode-type">
+                <div class="manual-set">
+                  <input name="manual-set-pow" data-sizing="px" type="range" min="0" max="3420" value="0">
+                  <output name="manual-set-pow" id="const-pow-set">0</output>
+                </div>
               </div>
             </div>
+
             <div class="mode-type">
               <span>Speed of simulation:</span>
               <div class="speed-set">
@@ -92,6 +91,33 @@
               placeholder="Length of board"
               max="210"
             />
+          </div>
+          <div class="pid-options">
+            <h4 class="pid-options-heading">PID options:</h4>
+            <input
+              type="number"
+              class="pid-p"
+              placeholder="P"
+              min="0"
+              max="1"
+              step="0.01"
+            />
+            <input
+              type="number"
+              class="pid-i"
+              placeholder="I"
+              min="0"
+              max="1"
+              step="0.01"
+            />
+            <input
+            type="number"
+            class="pid-d"
+            placeholder="D"
+            min="0"
+            max="1"
+            step="0.01"
+          />
           </div>
             <button class="form-control-submit_btn btn" type="submit" disabled>
               Submit

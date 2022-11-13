@@ -76,7 +76,8 @@ input[type='range'] {
   height: 3px;
   width: 80%;
   background-color: #a2abb3;
-  margin-top: 22px;
+  margin-top: 17px;
+  margin-bottom: 17px;
   outline: none;
   border-radius: 0.25rem;
   transition: 0.3s;
@@ -169,13 +170,14 @@ output[name='manual-set-temp'] {
 }
 
 .mode,
-.size-board {
+.size-board,
+.pid-options {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 20px 10px;
+  margin: 15px 10px;
   padding: 10px;
   font-family: Roboto;
   font-style: normal;
@@ -184,8 +186,14 @@ output[name='manual-set-temp'] {
   border: 1px dotted #313538;
 }
 
+.pid-options,
+.size-board {
+  flex-direction: row;
+}
+
 .mode-heading,
-.size-board-heading {
+.size-board-heading,
+.pid-options-heading {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 0%;
@@ -210,7 +218,11 @@ output[name='manual-set-temp'] {
 }
 
 .width-board,
-.length-board {
+.length-board,
+.pid-i,
+.pid-p,
+.pid-d {
+  width: 100%;
   margin: 7px;
 }
 
