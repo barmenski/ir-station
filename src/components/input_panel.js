@@ -94,14 +94,17 @@ export class Input_panel {
     K_P.addEventListener('input', (event) => {
       event.preventDefault();
       this.k_p = Number(K_P.value);
+      console.log('this.k_p: ' + this.k_p);
     });
     K_I.addEventListener('input', (event) => {
       event.preventDefault();
       this.k_i = Number(K_I.value);
+      console.log('this.k_i: ' + this.k_i);
     });
     K_D.addEventListener('input', (event) => {
       event.preventDefault();
       this.k_d = Number(K_D.value);
+      console.log('this.k_d: ' + this.k_d);
     });
   };
 }

@@ -11,12 +11,7 @@ export class Station {
     this.tempChip = 25;
     this.idealTemp = 25;
     this.tempBoard = 25;
-    this.ctr = new Controller({
-      k_p: this.input_panel.k_p,
-      k_p: this.input_panel.k_i,
-      k_p: this.input_panel.k_d,
-      dt: 1,
-    });
+    this.ctr = null;
     // this.profilePb = [
     //   [120, 150],
     //   [210, 183],
@@ -118,9 +113,11 @@ export class Station {
         this.getTemperature();
         break;
       case 'const-temp':
-        this.ctr.setTarget(this.input_panel.constTemp);
-        console.log(this.input_panel.constTemp);
+        //this.ctr.setTarget(this.input_panel.constTemp);
+        // console.log(this.ctr);
+        let prevTemp = this.tempChip;
         this.getTemperature();
+        this.delta = Number((this.tempChip - prevTemp).toFixed(2));
         this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
         break;
     }
@@ -129,6 +126,17 @@ export class Station {
   start = () => {
     this.init();
     this.input_panel.init();
+    this.ctr = new Controller({
+      k_p: this.input_panel.k_p,
+      k_i: this.input_panel.k_i,
+      k_d: this.input_panel.k_d,
+      dt: 1,
+    });
+    console.log(this.ctr);
+    if (this.input_panel.mode === 'const-temp') {
+      this.ctr.setTarget(this.input_panel.constTemp);
+      console.log(this.input_panel);
+    }
 
     this.timerStopped = false;
     this.timerFunc = () => {

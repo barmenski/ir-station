@@ -3,7 +3,7 @@ import { Graph } from './components/graph.js';
 import { Input_panel } from './components/input_panel.js';
 
 window.station = new Station();
-let InputPanel = new Input_panel();
+//let InputPanel = new Input_panel();
 
 const START_BTN = document.querySelector('.form-control-start_btn');
 const CANCEL_BTN = document.querySelector('.form-control-cancel_btn');
@@ -20,7 +20,7 @@ const POWER_BOTTOM_CANVAS = document.querySelector('.power-bottom-canvas');
 window.temp_graph = new Graph(TEMP_CANVAS, 'Chip temp.');
 window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'delta');
 window.power_bottom_graph = new Graph(POWER_BOTTOM_CANVAS, 'Power bottom');
-InputPanel.init();
+window.station.input_panel.init();
 
 START_BTN.addEventListener('click', (event) => {
   event.preventDefault();
