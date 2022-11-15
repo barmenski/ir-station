@@ -52,6 +52,12 @@ export class Station {
     window.refresh();
     this.timer.innerHTML = `${this.currTime} s`;
     this.currTime++;
+    this.ctr.setTarget(
+      this.input_panel.constTemp,
+      this.input_panel.k_p,
+      this.input_panel.k_i,
+      this.input_panel.k_d
+    );
     switch (this.input_panel.mode) {
       case 'pb+':
       case 'pb-':
@@ -113,12 +119,13 @@ export class Station {
         this.getTemperature();
         break;
       case 'const-temp':
-        //this.ctr.setTarget(this.input_panel.constTemp);
         // console.log(this.ctr);
         let prevTemp = this.tempChip;
         this.getTemperature();
+        console.log('this.tempChip: ', this.tempChip);
         this.delta = Number((this.tempChip - prevTemp).toFixed(2));
         this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
+        console.log('this.powerBottom: ', this.powerBottom);
         break;
     }
   };
@@ -132,11 +139,10 @@ export class Station {
       k_d: this.input_panel.k_d,
       dt: 1,
     });
-    console.log(this.ctr);
-    if (this.input_panel.mode === 'const-temp') {
-      this.ctr.setTarget(this.input_panel.constTemp);
-      console.log(this.input_panel);
-    }
+    // if (this.input_panel.mode === 'const-temp') {
+    //   this.ctr.setTarget(this.input_panel.constTemp);
+    //   console.log(this.input_panel);
+    // }
 
     this.timerStopped = false;
     this.timerFunc = () => {

@@ -29,8 +29,11 @@ export class Controller {
     this.target = 0; // default value, can be modified with .setTarget
   }
 
-  setTarget(target) {
+  setTarget(target, k_p, k_i, k_d) {
     this.target = target;
+    this.k_p = typeof k_p === 'number' ? k_p : 1;
+    this.k_i = k_i || 0;
+    this.k_d = k_d || 0;
   }
 
   update(currentValue) {
@@ -62,8 +65,16 @@ export class Controller {
 
     let dError = (error - this.lastError) / dt;
     this.lastError = error;
-
-    return this.k_p * error + this.k_i * this.sumError + this.k_d * dError;
+    let result =
+      this.k_p * error + this.k_i * this.sumError + this.k_d * dError;
+    if (result > 0) {
+      if (result > 3420) {
+        result = 3420;
+      }
+    } else {
+      result = 0;
+    }
+    return result;
   }
 
   reset() {

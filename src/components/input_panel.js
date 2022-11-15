@@ -31,9 +31,9 @@ export class Input_panel {
     this.speed = 1;
     this.boardWidth = 150;
     this.boardLength = 200;
-    this.k_p = 0.25;
-    this.k_i = 0.1;
-    this.k_d = 0.1;
+    this.k_p = 40;
+    this.k_i = 0.05;
+    this.k_d = 80;
     this.profilePb = [
       [130, 150],
       [210, 183],
@@ -77,6 +77,7 @@ export class Input_panel {
       event.preventDefault();
       OUTPUT_TEMP_RANGE.innerHTML = `${INPUT_TEMP_RANGE.value}`;
       this.constTemp = Number(INPUT_TEMP_RANGE.value);
+      document.getElementById('const-temp').checked = true;
     });
 
     INPUT_POWER_RANGE.addEventListener('input', (event) => {
