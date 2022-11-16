@@ -7,7 +7,7 @@ export class Station {
     this.temperature = new Temperature();
     this.input_panel = new Input_panel();
     this.powerTop = 0;
-    this.powerBottom = 100;
+    this.powerBottom = 0;
     this.tempChip = 25;
     this.idealTemp = 25;
     this.tempBoard = 25;
@@ -52,12 +52,7 @@ export class Station {
     window.refresh();
     this.timer.innerHTML = `${this.currTime} s`;
     this.currTime++;
-    this.ctr.setTarget(
-      this.input_panel.constTemp,
-      this.input_panel.k_p,
-      this.input_panel.k_i,
-      this.input_panel.k_d
-    );
+
     switch (this.input_panel.mode) {
       case 'pb+':
       case 'pb-':
@@ -85,7 +80,12 @@ export class Station {
           let prevTemp = this.tempChip;
           this.getTemperature();
           this.delta = Number((this.tempChip - prevTemp).toFixed(2));
-          this.ctr.setTarget(this.idealTemp);
+          this.ctr.setTarget(
+            this.idealTemp,
+            this.input_panel.k_p,
+            this.input_panel.k_i,
+            this.input_panel.k_d
+          );
           this.idealTemp = this.idealTemp + this.rise;
           this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
         } else if (this.tempChip >= preHeatTemp && this.tempChip <= waitTemp) {
@@ -96,19 +96,14 @@ export class Station {
           let prevTemp = this.tempChip;
           this.getTemperature();
           this.delta = Number((this.tempChip - prevTemp).toFixed(2));
-          this.ctr.setTarget(this.idealTemp);
+          this.ctr.setTarget(
+            this.idealTemp,
+            this.input_panel.k_p,
+            this.input_panel.k_i,
+            this.input_panel.k_d
+          );
           this.idealTemp = this.idealTemp + this.rise;
           this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
-          // } else if (this.tempChip >= waitTemp && this.tempChip <= reflowTemp) {
-          //   //-----------3
-          //   this.rise = Number(
-          //     ((reflowTemp - waitTemp) / (reflowTime - waitTime)).toFixed(1)
-          //   );
-          //   let prevTemp = this.tempChip;
-          //   this.getTemperature();
-
-          //   this.delta = Number((this.tempChip - prevTemp).toFixed(1));
-          //   this.analize();
         } else {
           this.stop();
           alert('Stop heating.');
@@ -119,7 +114,12 @@ export class Station {
         this.getTemperature();
         break;
       case 'const-temp':
-        // console.log(this.ctr);
+        this.ctr.setTarget(
+          this.input_panel.constTemp,
+          this.input_panel.k_p,
+          this.input_panel.k_i,
+          this.input_panel.k_d
+        );
         let prevTemp = this.tempChip;
         this.getTemperature();
         console.log('this.tempChip: ', this.tempChip);
