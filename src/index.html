@@ -14,7 +14,7 @@
     <div class="wrapper">
       <main class="main grid">
         <div class="wrapper-station">
-          <div class="top-heater">
+          <!-- <div class="top-heater">
             <p class="top-heater-text">
               <span class="top-heater-power">-</span>&nbspW
             </p>
@@ -40,7 +40,7 @@
               <span class="bottom-heater-power">-</span>&nbspW
             </p>
           </div>
-          <div class="timer">0 s</div>
+          <div class="timer">0 s</div> -->
         </div>
         <div class="wrapper-control">
           <h3 class="heading-control">Control</h3>
@@ -92,36 +92,45 @@
               max="210"
             />
           </div>
-          <div class="pid-options">
+          <div class="pid-settings">
             <h4 class="pid-options-heading">PID options:</h4>
-            <input
+            <div class="pid-options">
+              <input
+                type="number"
+                class="pid-p"
+                placeholder="P"
+                min="0"
+                max="100"
+                step="0.01"
+              />
+              <input
+                type="number"
+                class="pid-i"
+                placeholder="I"
+                min="0"
+                max="100"
+                step="0.01"
+              />
+              <input
               type="number"
-              class="pid-p"
-              placeholder="P"
+              class="pid-d"
+              placeholder="D"
               min="0"
               max="100"
               step="0.01"
-            />
-            <input
-              type="number"
-              class="pid-i"
-              placeholder="I"
-              min="0"
-              max="100"
-              step="0.01"
-            />
-            <input
-            type="number"
-            class="pid-d"
-            placeholder="D"
-            min="0"
-            max="100"
-            step="0.01"
-          />
+              />
+
+            </div>
+            <div class="pid-btn">
+              <button class="form-control-load_btn btn-small" type="submit">
+                Load
+              </button>
+              <button class="form-control-save_btn btn-small" type="submit">
+                Save
+              </button>
+            </div>
           </div>
-            <button class="form-control-submit_btn btn" type="submit" disabled>
-              Submit
-            </button>
+
             <button class="form-control-cancel_btn btn" type="submit">
               Stop
             </button>

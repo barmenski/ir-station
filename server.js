@@ -34,6 +34,11 @@ http
       var fileStream = fs.createReadStream(favPath);
       response.writeHead(200, { 'Content-Type': 'image/x-icon' });
       fileStream.pipe(response);
+    } else if (request.url.match('.(svg|jpg|png)$')) {
+      var imgPath = path.join(__dirname, 'src', request.url);
+      var fileStream = fs.createReadStream(imgPath);
+      response.writeHead(200, { 'Content-Type': 'image/svg+xml' });
+      fileStream.pipe(response);
     } else if (request.url.match('.js$')) {
       var jsPath = path.join(__dirname, 'src', request.url);
       var fileStream = fs.createReadStream(jsPath, 'UTF-8');

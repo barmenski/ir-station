@@ -148,29 +148,20 @@ output[name='manual-set-temp'] {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 0.7fr 0.3fr;
+  /*grid-template-rows: 1fr;*/
   grid-template-areas:
     'station control'
     'graph graph';
+  /*grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));*/
 }
 
 .wrapper-station {
   height: 550px;
   grid-area: station;
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  z-index: 1;
-}
-
-.station-image {
-  height: 640px;
-  position: absolute;
-  transform: translate(-20%, 5%);
-  top: 0%;
-  right: 0%;
-  z-index: 2;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrapper-control {
@@ -249,47 +240,76 @@ output[name='manual-set-temp'] {
 }
 
 .top-heater {
-  width: 80px;
-  height: 30px;
+  width: 150px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid #bfbfbf;
   background-color: #dfdfdf;
   margin: 10px;
-  z-index: 3;
 }
 
 .chip {
-  width: 2px;
-  height: 2px;
+  width: 20px;
+  height: 5px;
+  border: 2px solid black;
   background-color: black;
   margin-top: 50px;
   margin-bottom: 5px;
   position: relative;
-  z-index: 3;
+}
+
+.substrate {
+  width: 60px;
+  height: 1px;
+  border: 2px solid green;
+  margin: 5px;
+  position: absolute;
+  transform: translate(-46%, -50%);
+  top: 0%;
+  left: 0%;
+  background-color: green;
+}
+
+.substrate-balls {
+  position: absolute;
+  transform: translate(0%, 50%);
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ball {
+  width: 4px;
+  height: 4px;
+  margin: 0.5px;
+  background: silver;
+  border: 0.1px solid black;
+  border-radius: 50%;
 }
 
 .board {
-  width: 2px;
-  height: 2px;
-  background-color: black;
-  margin-top: 50px;
-  margin-bottom: 5px;
+  width: 350px;
+  height: 5px;
+  border: 2px solid green;
+  margin: 5px;
   position: relative;
-  z-index: 3;
+  background-color: green;
 }
 
 .bottom-heater {
-  width: 80px;
-  height: 30px;
+  width: 400px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 2px solid #bfbfbf;
   background-color: #dfdfdf;
   margin: 10px;
-  z-index: 3;
 }
 
 .chip-text,
@@ -351,7 +371,6 @@ output[name='manual-set-temp'] {
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
-  z-index: 3;
 }
 
 .heading-control,

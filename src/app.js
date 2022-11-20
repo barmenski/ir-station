@@ -1,9 +1,10 @@
 import { Station } from './components/station.js';
 import { Graph } from './components/graph.js';
-import { Input_panel } from './components/input_panel.js';
+import { Station_image } from './components/station_img.js';
 
+const station_image = new Station_image();
+station_image.init();
 window.station = new Station();
-//let InputPanel = new Input_panel();
 
 const START_BTN = document.querySelector('.form-control-start_btn');
 const CANCEL_BTN = document.querySelector('.form-control-cancel_btn');
