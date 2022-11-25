@@ -145,6 +145,7 @@ output[name='manual-set-temp'] {
 }
 
 .grid {
+  height: 0;
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 0.7fr 0.3fr;
@@ -154,22 +155,24 @@ output[name='manual-set-temp'] {
 }
 
 .wrapper-station {
-  height: 550px;
   grid-area: station;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
 }
 
 .station-image {
-  height: 640px;
-  position: absolute;
-  transform: translate(-20%, 5%);
-  top: 0%;
-  right: 0%;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  /* transform: translate(0%, 17%); */
+  /*top: 0%;
+  right: 0%; */
+
   z-index: 2;
 }
 
@@ -249,13 +252,15 @@ output[name='manual-set-temp'] {
 }
 
 .top-heater {
-  width: 80px;
+  width: auto;
   height: 30px;
+  position: absolute;
+  transform: translate(50%, 110%);
+  top: 0%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #bfbfbf;
-  background-color: #dfdfdf;
+  background-color: #bfbfbf;
   margin: 10px;
   z-index: 3;
 }
@@ -263,31 +268,36 @@ output[name='manual-set-temp'] {
 .chip {
   width: 2px;
   height: 2px;
-  background-color: black;
+  position: absolute;
+  transform: translate(0%, 0%);
+  top: 34%;
   margin-top: 50px;
   margin-bottom: 5px;
-  position: relative;
   z-index: 3;
 }
 
 .board {
   width: 2px;
   height: 2px;
+  position: absolute;
+  transform: translate(0%, 0%);
+  top: 40%;
   background-color: black;
   margin-top: 50px;
   margin-bottom: 5px;
-  position: relative;
   z-index: 3;
 }
 
 .bottom-heater {
-  width: 80px;
+  width: auto;
   height: 30px;
+  position: absolute;
+  transform: translate(50%, 50%);
+  top: 71%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #bfbfbf;
-  background-color: #dfdfdf;
+  background-color: #bfbfbf;
   margin: 10px;
   z-index: 3;
 }
@@ -298,7 +308,6 @@ output[name='manual-set-temp'] {
   position: absolute;
   transform: translate(150%, -130%);
   top: 0%;
-  right: 0%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -308,11 +317,11 @@ output[name='manual-set-temp'] {
 .chip-text::before {
   content: '';
   position: absolute;
-  width: 50px;
-  top: 95%;
-  left: -45%;
+  width: 118px;
+  top: 100%;
+  left: -143%;
   border-top: 1px solid red;
-  transform: rotate(-39deg);
+  transform: rotate(-15deg);
 }
 
 .board-text::before {
@@ -346,6 +355,10 @@ output[name='manual-set-temp'] {
 }
 
 .timer {
+  position: absolute;
+  transform: translate(50%, -50%);
+  left: 0%;
+  top: 90%;
   min-width: 65px;
   font-family: Roboto;
   font-style: normal;

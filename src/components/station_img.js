@@ -5,23 +5,28 @@ export class Station_image {
 
   init = () => {
     this.wrapper_station.innerHTML = `
-    <div class="top-heater">
+  <img class="station-image" src="./assets/images/ir-station-model.svg" alt="IR-station image"/>
+  
+  <div class="top-heater">
     <p class="top-heater-text">
       <span class="top-heater-power">-</span>&nbspW
     </p>
   </div>
+  
   <div class="chip">
     <p class="chip-text"><span class="chip-temp">-</span>&nbsp&#176C</p>
   </div>
-  <img class="station-image" src="./assets/images/ir-station-model.svg" alt="IR-station image"/>
+  
   <div class="board">
     <p class="board-text"><span class="board-temp">-</span>&nbsp&#176C</p>
   </div>
+  
   <div class="bottom-heater">
     <p class="bottom-heater-text">
       <span class="bottom-heater-power">-</span>&nbspW
     </p>
   </div>
+  
   <div class="timer">0 s</div>
     `;
   };
