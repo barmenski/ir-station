@@ -19,7 +19,7 @@ const POWER_TOP_CANVAS = document.querySelector('.power-top-canvas');
 const POWER_BOTTOM_CANVAS = document.querySelector('.power-bottom-canvas');
 
 window.temp_graph = new Graph(TEMP_CANVAS, 'Chip temp.');
-window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'delta');
+window.power_top_graph = new Graph(POWER_TOP_CANVAS, 'Power top');
 window.power_bottom_graph = new Graph(POWER_BOTTOM_CANVAS, 'Power bottom');
 window.station.input_panel.init();
 
@@ -43,7 +43,7 @@ window.refresh = () => {
   );
   window.power_top_graph.drawGraph(
     window.station.currTime * 0.5,
-    -30 * window.station.delta
+    -0.1 * window.station.powerTop
   );
   window.power_bottom_graph.drawGraph(
     window.station.currTime * 0.5,

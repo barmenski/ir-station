@@ -52,7 +52,10 @@ export class Temperature {
     );
 
     let deltaTemp = Number(
-      (((powerTop + powerBottom) * 0.5) / (this.tempCap * weight)).toFixed(2)
+      (
+        ((powerTop * 0.1 + powerBottom) * 0.5) /
+        (this.tempCap * weight)
+      ).toFixed(2)
     );
 
     if (this.tempBoard >= this.tempEnv) {
@@ -65,7 +68,22 @@ export class Temperature {
   };
 
   getTempChip = (powerTop, powerBottom, boardWidth, boardLength) => {
-    this.tempChip = this.tempBoard;
+    let weight = Number(
+      (((boardWidth * boardLength * 2) / 1000000000) * this.density).toFixed(1)
+    );
+
+    let deltaTemp = Number(
+      (
+        ((powerTop + powerBottom * 0.9) * 0.5) /
+        (this.tempCap * weight)
+      ).toFixed(2)
+    );
+
+    if (this.tempChip >= this.tempEnv) {
+      this.tempChip = Number((this.tempChip - 0.7 + deltaTemp).toFixed(2));
+    } else {
+      this.tempChip = this.tempEnv;
+    }
     return this.tempChip;
   };
 }

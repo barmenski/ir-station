@@ -1,6 +1,5 @@
 export class Graph {
   constructor(canvas, name) {
-    //this.canvas = document.querySelector('.temp-canvas');
     this.canvas = canvas;
     this.name = name;
     this.canvas.width = 220;
