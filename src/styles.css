@@ -367,6 +367,19 @@ output[name='manual-set-temp'] {
   z-index: 3;
 }
 
+.show-mode {
+  position: absolute;
+  transform: translate(50%, -50%);
+  left: 0%;
+  top: 95%;
+  min-width: 65px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  z-index: 3;
+}
+
 .heading-control,
 .heading-graph {
   margin: 10px;

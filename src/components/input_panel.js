@@ -37,12 +37,12 @@ export class Input_panel {
     this.profilePb = [
       [130, 150],
       [210, 183],
-      [270, 183],
+      [240, 220],
     ];
     this.profilePbFree = [
       [120, 160],
       [210, 219],
-      [270, 219],
+      [240, 250],
     ];
   }
 
@@ -84,6 +84,7 @@ export class Input_panel {
       event.preventDefault();
       OUTPUT_POWER_RANGE.innerHTML = `${INPUT_POWER_RANGE.value}`;
       this.constPow = Number(INPUT_POWER_RANGE.value);
+      document.getElementById('const-pow').checked = true;
     });
 
     INPUT_SPEED_RANGE.addEventListener('input', (event) => {
@@ -107,5 +108,9 @@ export class Input_panel {
       this.k_d = Number(K_D.value);
       console.log('this.k_d: ' + this.k_d);
     });
+  };
+
+  set_mode = (mode) => {
+    this.mode = mode;
   };
 }

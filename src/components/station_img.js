@@ -28,6 +28,7 @@ export class Station_image {
   </div>
   
   <div class="timer">0 s</div>
+  <div class="show-mode">Mode:</div>
     `;
   };
 }

@@ -12,21 +12,18 @@ export class Station {
     this.idealTemp = 25;
     this.tempBoard = 25;
     this.ctr = null;
-    // this.profilePb = [
-    //   [120, 150],
-    //   [210, 183],
-    //   [270, 183],
-    // ];
-    // this.profilePbFree = [
-    //   [120, 150],
-    //   [210, 219],
-    //   [270, 219],
-    // ];
     this.currTime = 0;
     this.stepPower = 10;
     this.delta = 0;
     this.rise = 0;
     this.timerStopped = true;
+
+    this.preHeatTime = 0;
+    this.preHeatTrmp = 0;
+    this.waitTime = 0;
+    this.waitTemp = 0;
+    this.reflowTime = 0;
+    this.reflowTemp = 0;
   }
 
   init = () => {
@@ -57,25 +54,25 @@ export class Station {
       case 'pb+':
       case 'pb-':
         if (this.input_panel.mode === 'pb+') {
-          var preHeatTime = this.input_panel.profilePb[0][0];
-          var preHeatTemp = this.input_panel.profilePb[0][1];
-          var waitTime = this.input_panel.profilePb[1][0];
-          var waitTemp = this.input_panel.profilePb[1][1];
-          var reflowTime = this.input_panel.profilePb[2][0];
-          var reflowTemp = this.input_panel.profilePb[2][1];
+          this.preHeatTime = this.input_panel.profilePb[0][0];
+          this.preHeatTemp = this.input_panel.profilePb[0][1];
+          this.waitTime = this.input_panel.profilePb[1][0];
+          this.waitTemp = this.input_panel.profilePb[1][1];
+          this.reflowTime = this.input_panel.profilePb[2][0];
+          this.reflowTemp = this.input_panel.profilePb[2][1];
         } else if (this.input_panel.mode === 'pb-') {
-          var preHeatTime = this.input_panel.profilePbFree[0][0];
-          var preHeatTemp = this.input_panel.profilePbFree[0][1];
-          var waitTime = this.input_panel.profilePbFree[1][0];
-          var waitTemp = this.input_panel.profilePbFree[1][1];
-          var reflowTime = this.input_panel.profilePbFree[2][0];
-          var reflowTemp = this.input_panel.profilePbFree[2][1];
+          this.preHeatTime = this.input_panel.profilePbFree[0][0];
+          this.preHeatTemp = this.input_panel.profilePbFree[0][1];
+          this.waitTime = this.input_panel.profilePbFree[1][0];
+          this.waitTemp = this.input_panel.profilePbFree[1][1];
+          this.reflowTime = this.input_panel.profilePbFree[2][0];
+          this.reflowTemp = this.input_panel.profilePbFree[2][1];
         }
 
-        if (this.tempChip < preHeatTemp) {
-          //--------------------1
+        if (this.tempChip < this.preHeatTemp) {
+          //----------------------------------1 stage - prepare Heat
           this.rise = Number(
-            ((preHeatTemp - 25) / (preHeatTime - 0)).toFixed(2)
+            ((this.preHeatTemp - 25) / (this.preHeatTime - 0)).toFixed(2)
           );
           let prevTemp = this.tempChip;
           this.getTemperature();
@@ -87,11 +84,17 @@ export class Station {
             this.input_panel.k_d
           );
           this.idealTemp = this.idealTemp + this.rise;
-          this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
-        } else if (this.tempChip >= preHeatTemp && this.tempChip <= waitTemp) {
-          //-------------------------------------------------------------------2
+          this.powerBottom = Number(this.ctr.update(this.tempChip).toFixed(2));
+        } else if (
+          this.tempChip >= this.preHeatTemp &&
+          this.tempChip <= this.waitTemp
+        ) {
+          //----------------------------------2  stage - waitting
           this.rise = Number(
-            ((waitTemp - preHeatTemp) / (waitTime - preHeatTime)).toFixed(2)
+            (
+              (this.waitTemp - this.preHeatTemp) /
+              (this.waitTime - this.preHeatTime)
+            ).toFixed(2)
           );
           let prevTemp = this.tempChip;
           this.getTemperature();
@@ -103,14 +106,50 @@ export class Station {
             this.input_panel.k_d
           );
           this.idealTemp = this.idealTemp + this.rise;
-          this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
-        } else {
-          this.stop();
-          alert('Stop heating.');
+          this.powerBottom = Number(this.ctr.update(this.tempChip).toFixed(2));
+        } else if (this.tempChip > this.waitTemp) {
+          this.input_panel.set_mode('pb const-pow');
         }
         break;
+      case 'pb const-pow':
+        //----------------------------------3  stage - constant power for bottom heater and rise for maximum
+        if (this.tempChip >= this.waitTemp && this.tempChip < this.reflowTemp) {
+          this.rise = Number(
+            (
+              (this.reflowTemp - this.waitTemp) /
+              (this.reflowTime - this.waitTime)
+            ).toFixed(2)
+          );
+          let prevTemp = this.tempChip;
+          this.getTemperature();
+          this.delta = Number((this.tempChip - prevTemp).toFixed(2));
+          this.ctr.setTarget(
+            this.idealTemp,
+            this.input_panel.k_p,
+            this.input_panel.k_i,
+            this.input_panel.k_d
+          );
+          this.idealTemp = this.idealTemp + this.rise;
+          this.powerTop = Number(this.ctr.update(this.tempChip).toFixed(2));
+        } else if (this.tempChip >= this.reflowTemp) {
+          this.ctr.setTarget(
+            this.reflowTemp,
+            this.input_panel.k_p,
+            this.input_panel.k_i,
+            this.input_panel.k_d
+          );
+          this.powerTop = Number(this.ctr.update(this.tempChip).toFixed(2));
+          this.powerBottom = 197;
+          this.getTemperature();
+        }
+        break;
+      case 'heaters off':
+        this.powerBottom = 0;
+        this.powerTop = 0;
+        this.getTemperature();
+        break;
       case 'const-pow':
-        this.powerBottom = this.this.input_panel.constPow;
+        this.powerBottom = this.input_panel.constPow;
         this.getTemperature();
         break;
       case 'const-temp':
@@ -139,10 +178,6 @@ export class Station {
       k_d: this.input_panel.k_d,
       dt: 1,
     });
-    // if (this.input_panel.mode === 'const-temp') {
-    //   this.ctr.setTarget(this.input_panel.constTemp);
-    //   console.log(this.input_panel);
-    // }
 
     this.timerStopped = false;
     this.timerFunc = () => {
