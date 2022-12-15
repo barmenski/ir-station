@@ -169,22 +169,18 @@ output[name='manual-set-temp'] {
   width: 100%;
   max-width: 500px;
   height: auto;
-  /* transform: translate(0%, 17%); */
-  /*top: 0%;
-  right: 0%; */
-
   z-index: 2;
 }
 
 .wrapper-control {
-  height: 550px;
   grid-area: control;
   background-color: antiquewhite;
 }
 
 .mode,
 .size-board,
-.pid-settings {
+.pid-settings,
+.speed {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -199,23 +195,35 @@ output[name='manual-set-temp'] {
   border: 1px dotted #313538;
 }
 
-.size-board {
+.speed {
+  border: none;
+}
+.size-board-input {
+  display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .mode-heading,
 .size-board-heading,
 .pid-options-heading {
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translate(0, -50%);
   top: 0%;
-  left: 50%;
-  background-color: antiquewhite;
+  left: 0%;
+  width: 100%;
+  text-align: center;
+
   padding: 5px;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
+}
+.heading-back {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: antiquewhite;
 }
 
 .mode-type {
@@ -224,6 +232,7 @@ output[name='manual-set-temp'] {
 
 .manual-set,
 .speed-set {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,6 +252,14 @@ output[name='manual-set-temp'] {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.wrapper-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .wrapper-graph {

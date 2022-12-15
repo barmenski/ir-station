@@ -161,10 +161,8 @@ export class Station {
         );
         let prevTemp = this.tempChip;
         this.getTemperature();
-        console.log('this.tempChip: ', this.tempChip);
         this.delta = Number((this.tempChip - prevTemp).toFixed(2));
         this.powerBottom = Number(this.ctr.update(this.tempChip)).toFixed(2);
-        console.log('this.powerBottom: ', this.powerBottom);
         break;
     }
   };
